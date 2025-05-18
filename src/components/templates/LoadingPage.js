@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../atoms/Button';
+import Button from '../molecules/LoginButton';
 import logo from "../../images/logo2.png"
 import useModal from '../../hooks/useModal';
 import LoginModal from '../molecules/LoginModel'; 

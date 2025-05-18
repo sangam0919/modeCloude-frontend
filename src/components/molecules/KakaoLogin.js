@@ -1,7 +1,6 @@
 import React from 'react';
-import Button from '../atoms/Button';
 import styled from 'styled-components';
-import kakaoIcon from '../../images/kakologin.png'; // ← 이미지 import
+import kakaoIcon from '../../images/kakologin.png'; 
 
 const KakaoIcon = styled.div`
   background-image: url(${props => props.$icon});
@@ -11,6 +10,7 @@ const KakaoIcon = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   margin-right: 8px;
+  
   img {
     margin-left: 2.4vh;
   }
@@ -23,7 +23,7 @@ const KakaoLogin = () => {
   };
   return (
     <KakaoIcon onClick={handleLogin}> 
-      <img src={kakaoIcon}  />
+      <img src={kakaoIcon} />
     </KakaoIcon>
   );
 };
