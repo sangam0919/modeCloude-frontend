@@ -11,8 +11,7 @@ const Circle = styled.div`
   width: ${({diameter}) => diameter}px;
   height: ${({diameter}) => diameter}px;
   border-radius: 50%;
-  background: ${({ bgColor, mood }) =>
-    bgColor || moodColor[mood] || '#eee'};
+  background: ${({ bgColor, mood }) =>bgColor || moodColor[mood] || '#eee'};
   display: flex;
   justify-content: center;
   align-items: center;

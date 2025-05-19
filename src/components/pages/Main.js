@@ -1,15 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import EmotionDiarySection from '../templates/EmotionDiarySection';
-import RecentDiariesSection from '../templates/RecentDiariesSection';
-import OtherDiariesSection from '../templates/OtherDiariesSection';
-import Sidebar from '../templates/Sidbar';
+import EmotionDiarySection from '../templates/main/EmotionDiarySection';
+import RecentDiariesSection from '../templates/main/RecentDiariesSection';
+import OtherDiariesSection from '../templates/main/OtherDiariesSection';
+import Sidebar from '../templates/main/Sidbar';
 import LayoutTwoCols from '../templates/LayoutTwoCols';
 import Header from '../templates/Header';
-import MainGreetingSection from '../templates/MainGreetingSection';
+import MainGreetingSection from '../templates/main/MainGreetingSection';
 import FooterActions from '../templates/FooterActions';
 import Container from '../atoms/Container';
+import styled from 'styled-components';
+
+const Wrap = styled.div`
+  min-height: 100vh;
+  padding-bottom: 50px;
+`
 
 const Main = () => {
   const leftColumn = (
@@ -21,12 +25,14 @@ const Main = () => {
   );
 
   return (
+    <Wrap>
     <Container>
       <Header />
       <MainGreetingSection />
       <LayoutTwoCols left={leftColumn} right={<Sidebar />} />
       <FooterActions />
     </Container>
+    </Wrap>
   );
 };
 

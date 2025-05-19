@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import EmotionGrid from '../molecules/EmotionGrid';
-import SelectedEmotionInfo from '../molecules/SelectedEmotionInfo';
-import EmotionActions from '../molecules/EmotionActions';
-import TemplateTag from '../atoms/TemplateTag';
-
+import EmotionGrid from '../../molecules/EmotionGrid';
+import SelectedEmotionInfo from '../../molecules/SelectedEmotionInfo';
+import EmotionActions from '../../molecules/EmotionActions';
+import { moods } from '../../../hooks/simpleData'
 const Section = styled.section`
     background: white;
     border-radius: 15px;
@@ -20,16 +19,7 @@ const Divider = styled.hr`
 `;
 
 export default function EmotionDiarySection() {
-  const moods = [
-    { mood: 'happy',   emoji: '😊', label: '행복' },
-    { mood: 'sad',     emoji: '😢', label: '슬픔' },
-    { mood: 'angry',   emoji: '😠', label: '분노' },
-    { mood: 'calm',    emoji: '😌', label: '평온' },
-    { mood: 'anxious', emoji: '😰', label: '불안' },
-    { mood: 'tired',   emoji: '😴', label: '피곤' },
-    { mood: 'excited', emoji: '🤩', label: '신남' },
-    { mood: 'confused',emoji: '🤔', label: '혼란' },
-  ];
+
 
   const [selected, setSelected] = useState(null);
   const selObj = moods.find((m) => m.mood === selected);

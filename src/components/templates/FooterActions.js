@@ -1,10 +1,7 @@
-// src/components/templates/FooterActions.jsx
-
 import React from 'react';
 import styled from 'styled-components';
-import { OutlineBtn } from '../atoms/RoundButton'; // ✅ 실제 경로에 맞게 수정
+import { OutlineBtn } from '../atoms/RoundButton';
 
-// ✅ styled-components 정의
 const Footer = styled.div`
   text-align: center;
   margin-top: 30px;
@@ -24,7 +21,6 @@ const ButtonGroup = styled.div`
   margin-top: 15px;
 `;
 
-// ✅ 최종 컴포넌트
 const FooterActions = () => (
   <Footer>
     <Quote>"오늘 하루의 감정이 내일의 행복을 만듭니다."</Quote>

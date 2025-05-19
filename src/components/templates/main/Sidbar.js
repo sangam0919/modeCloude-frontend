@@ -1,8 +1,8 @@
 // src/components/templates/Sidebar.jsx
 import styled from 'styled-components';
-import StreakWidget from './StreakWidget';
-import WeatherWidget from './WeatherWidget';
-import useWeather from '../../hooks/useWeather';
+import StreakWidget from '../main/StreakWidget';
+import WeatherWidget from '../main/WeatherWidget';
+import useWeather from '../../../hooks/useWeather';
 import EmotionStatsWidget from './EmotionStatsWidget';
 // import WeatherWidget from './WeatherWidget';
 // import StatsWidget   from './StatsWidget';

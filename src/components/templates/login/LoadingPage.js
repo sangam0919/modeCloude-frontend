@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../molecules/LoginButton';
-import logo from "../../images/logo2.png"
-import useModal from '../../hooks/useModal';
-import LoginModal from '../molecules/LoginModel'; 
-import CloudBackground from '../atoms/CloudBackground';
+import Button from '../../molecules/LoginButton';
+import logo from "../../../images/logo2.png"
+import useModal from '../../../hooks/useModal';
+import LoginModal from '../../molecules/LoginModel'; 
+import CloudBackground from '../../atoms/CloudBackground';
 
 
 const Container = styled.div`

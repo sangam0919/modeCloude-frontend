@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import styled from 'styled-components';
-import StreakHeader  from '../molecules/StreakHeader';
-import WeeklyBar     from '../molecules/WeeklyBar';
-import BadgeRow      from '../molecules/BadgeRow';
-import MiniCalendar  from '../molecules/MiniCalendar';
+import StreakHeader  from '../../molecules/StreakHeader';
+import WeeklyBar     from '../../molecules/WeeklyBar';
+import BadgeRow      from '../../molecules/BadgeRow';
+import MiniCalendar  from '../../molecules/MiniCalendar';
 import { addMonths,startOfMonth,endOfMonth,getDay } from 'date-fns';
 
 const Card=styled.section`

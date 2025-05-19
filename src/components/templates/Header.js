@@ -1,9 +1,7 @@
-// src/components/templates/Header.jsx
-
 import { useState } from 'react';
 import styled from 'styled-components';
 import logo from "../../images/logo2.png"
-
+import { Link } from 'react-router-dom'
 // 전체 nav
 const Nav = styled.nav`
   width: 100%;
@@ -11,18 +9,16 @@ const Nav = styled.nav`
   padding: 20px 0;
 `;
 
-// 내부 레이아웃 wrapper
 const LayoutWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  position: relative; /* 중요! NavLinks 기준점 */
+  position: relative; 
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-// 왼쪽 로고
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
@@ -40,7 +36,6 @@ const LogoSection = styled.div`
   }
 `;
 
-// 중앙 링크 - 완전 중앙 정렬
 const NavLinks = styled.div`
   position: absolute;
   left: 50%;
@@ -64,7 +59,6 @@ const NavLinks = styled.div`
   }
 `;
 
-// 오른쪽 프로필
 const ProfileSection = styled.div`
   position: relative;
 `;
@@ -90,7 +84,6 @@ const Dropdown = styled.div`
   display: ${({ open }) => (open ? 'block' : 'none')};
 `;
 
-// 실제 Header 컴포넌트
 const Header = () => {
   const [open, setOpen] = useState(false);
 
@@ -104,9 +97,9 @@ const Header = () => {
 
         <NavLinks>
           {/* # 으로 해놔서 에러 뜸 */}
-          <a href="#" className="active">홈</a>
-          <a href="#">내 일기</a>
-          <a href="#">통계</a>
+          <Link to="#" className="active">홈</Link>
+          <Link to="#">내 일기</Link>
+          <Link to="#">통계</Link>
         </NavLinks>
 
         <ProfileSection>
