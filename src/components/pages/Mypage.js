@@ -8,10 +8,10 @@ const MypageWrap = styled.div`
 `
 const Mypage = () => {
     return (<>
-        <Header />
         <MypageWrap>
+            <Header />
             <ProfileHeader />
-            
+
         </MypageWrap>
     </>
     )
