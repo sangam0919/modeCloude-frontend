@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import KakaoLogin from './KakaoLogin';
-import logo from '../../images/logo2.png'
+import KakaoLogin from '../login/KakaoLogin';
+import logo from '../../../images/logo2.png'
 
 const ModalWrap = styled.div`
   position: fixed;

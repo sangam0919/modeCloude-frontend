@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import RelatedDiaryItem from '../../molecules/detail/RelatedDiaryItem';
-
+import { allDiaries } from '../../../hooks/simpleData'
 const Widget = styled.div`
   background: white;
   border-radius: 15px;
@@ -22,24 +22,25 @@ const List = styled.div`
   gap: 15px;
 `;
 
-// 더미 데이터
-const allDiaries = [
-  { emoji: '🤩', title: '벚꽃 축제 다녀온 날', date: '2024.04.12', mood: 'excited' },
-  { emoji: '😌', title: '주말 한강 소풍', date: '2024.05.22', mood: 'calm' },
-  { emoji: '😊', title: '봄비가 그친 후의 산책', date: '2025.03.15', mood: 'happy' },
-  { emoji: '😊', title: '좋은 날의 기억', date: '2025.03.10', mood: 'happy' },
-  { emoji: '😊', title: '햇살 가득한 오후', date: '2025.03.12', mood: 'happy' },
-  { emoji: '😌', title: '차분한 오후', date: '2024.06.01', mood: 'calm' },
-];
+
+
 
 const getRandomItems = (arr, count) => {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
-const RelatedDiariesWidget = ({ currentMood = 'happy' }) => {
-  const related = allDiaries.filter((d) => d.mood === currentMood);
+const getRandomMood = (diaries) => {
+  const moods = [...new Set(diaries.map(d => d.mood))]; // 중복 제거
+  return moods[Math.floor(Math.random() * moods.length)];
+};
+
+
+  const RelatedDiariesWidget = () => {
+  const randomMood = getRandomMood(allDiaries);
+  const related = allDiaries.filter((d) => d.mood === randomMood);
   const selected = getRandomItems(related, 3);
+
 
   return (
     <Widget>

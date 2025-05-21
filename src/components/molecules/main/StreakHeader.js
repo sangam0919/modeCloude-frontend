@@ -1,5 +1,5 @@
-import Counter from '../atoms/Count';
-import Icon from '../atoms/Icon';
+import Counter from '../../atoms/Count';
+import Icon from '../../atoms/Icon';
 import styled from 'styled-components';
 
 const Wrap = styled.div`
@@ -9,16 +9,18 @@ const Wrap = styled.div`
   gap: 8px;
   margin: 10px 0;
 `;
-
 const getIconSizeByStreak = (streak) => {
-  if (streak = 1) return 5;
-  if (streak = 2) return 10;
-  if (streak = 3) return 15;
-  if (streak = 4) return 25;
-  if (streak = 5) return 30;
-  if (streak = 6) return 40;
-  if (streak = 7) return 50;
-  return 24;
+  switch (streak) {
+    case 0: return 0;
+    case 1: return 15;
+    case 2: return 20;
+    case 3: return 25;
+    case 4: return 30;
+    case 5: return 35;
+    case 6: return 38;
+    case 7: return 50;
+    default: return 24;
+  }
 };
 
 export default ({ streak }) => {

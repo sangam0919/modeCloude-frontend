@@ -1,7 +1,7 @@
 // src/components/templates/WeatherWidget.jsx
 import styled from 'styled-components';
-import WeatherIcon from '../../molecules/WeatherIcon';
-import WeatherInfo from '../../molecules/WeatherInfo';
+import WeatherIcon from '../../molecules/main/WeatherIcon';
+import WeatherInfo from '../../molecules/main/WeatherInfo';
 
 const WidgetWrap = styled.div`
   background: white;

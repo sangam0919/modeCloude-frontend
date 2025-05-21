@@ -1,4 +1,4 @@
-import Badge from '../atoms/Badge';
+import Badge from '../../atoms/Badge';
 import styled from 'styled-components';
 const Row=styled.div`display:flex;justify-content:center;gap:10px;margin-bottom:20px;`;
 export default ({streak})=>(

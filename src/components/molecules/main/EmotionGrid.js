@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EmotionItem from '../molecules/EmotionItem';
+import EmotionItem from './EmotionItem';
 
 const Grid = styled.div`
     display: flex;
@@ -14,10 +14,10 @@ export default function EmotionGrid({ items, selected, onSelect }) {
     <Grid>
       {items.map((item) => (
         <EmotionItem
-          key={item.mood}
-          {...item}
-          selected={selected === item.mood}
-          onClick={() => onSelect(item.mood)}
+        key={item.id}                     
+        selected={selected === item.id}  
+        onClick={() => onSelect(item.id)} 
+        {...item}                       
         />
       ))}
     </Grid>

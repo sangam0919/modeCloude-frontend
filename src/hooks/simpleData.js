@@ -108,3 +108,12 @@ export const others = [
     updated_at: '2025-03-29T10:00:00',
   };
   
+  export const allDiaries = [
+    { emoji: '🤩', title: '벚꽃 축제 다녀온 날', date: '2024.04.12', mood: 'excited' },
+    { emoji: '😌', title: '주말 한강 소풍', date: '2024.05.22', mood: 'calm' },
+    { emoji: '😊', title: '봄비가 그친 후의 산책', date: '2025.03.15', mood: 'happy' },
+    { emoji: '😊', title: '좋은 날의 기억', date: '2025.03.10', mood: 'happy' },
+    { emoji: '😊', title: '햇살 가득한 오후', date: '2025.03.12', mood: 'happy' },
+    { emoji: '😌', title: '차분한 오후', date: '2024.06.01', mood: 'calm' },
+  ];
+  

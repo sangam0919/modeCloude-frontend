@@ -1,5 +1,5 @@
 // WeatherIcon.jsx
-import EmotionIcon from '../atoms/EmotionIcon';
+import EmotionIcon from '../../atoms/EmotionIcon';
 
 const weatherColorMap = {
   Clear: '#FFEAA7',        // 맑음 - 연노랑

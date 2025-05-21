@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ChartCenterText from '../atoms/ChartCenterText';
+import ChartCenterText from '../../atoms/ChartCenterText';
 
 const ChartWrapper = styled.div`
   position: relative;

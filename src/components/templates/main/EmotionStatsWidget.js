@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import DonutChart from '../../molecules/DonutChart';
-import EmotionStatItem from '../../molecules/EmotionStatItem';
-import EmotionInsightBox from '../../molecules/EmotionInsightBox';
+import DonutChart from '../../molecules/main/DonutChart';
+import EmotionStatItem from '../../molecules/main/EmotionStatItem';
+import EmotionInsightBox from '../../molecules/main/EmotionInsightBox';
 import { Link } from 'react-router-dom';
 
 const Widget = styled.div`
@@ -37,13 +37,15 @@ const EmotionStatsList = styled.div`
   flex: 1;
 `;
 
-// const Link = styled.a`
-//   display: block;
-//   margin-top: 15px;
-//   text-align: center;
-//   color: #b881c2;
-//   font-weight: 500;
-// `;
+const LinkTO = styled.div`
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #b881c2;
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-decoration: none;
+`;
 
 const EmotionStatsWidget = () => (
   <Widget>
@@ -61,7 +63,9 @@ const EmotionStatsWidget = () => (
     </ChartRow>
 
     <EmotionInsightBox />
+    <LinkTO>
     <Link to='#'>자세한 통계 보기</Link>
+    </LinkTO>
   </Widget>
 );
 

@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 import styled from 'styled-components';
 import CalHeader  from './CalHeader';
-import Circle     from '../atoms/Circle';
-import Dot        from '../atoms/EmotionDot';
+import Circle     from '../../atoms/Circle';
+import Dot        from '../../atoms/EmotionDot';
 import { addMonths, startOfMonth, endOfMonth, getDay } from 'date-fns';
 
 const Grid=styled.div`

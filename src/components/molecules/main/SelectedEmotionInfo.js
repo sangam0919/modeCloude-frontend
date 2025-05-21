@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EmotionIcon from '../atoms/EmotionIcon';
+import EmotionIcon from '../../atoms/EmotionIcon';
 
 const Wrap = styled.div`
   display: flex;

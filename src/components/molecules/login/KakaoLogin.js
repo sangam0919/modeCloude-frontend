@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import kakaoIcon from '../../images/kakologin.png'; 
+import kakaoIcon from '../../../images/kakologin.png'; 
+import { userLogin } from '../../../api/user';
 
 const KakaoIcon = styled.div`
   background-image: url(${props => props.$icon});
@@ -17,15 +18,16 @@ const KakaoIcon = styled.div`
 `;
 
 const KakaoLogin = () => {
-  const handleLogin = () => {
-    window.location.href =
-      'https://kauth.kakao.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code';
+  const handleLogin = async () => {
+    const {url} = await userLogin();
+    window.location.href = url;
   };
   return (
     <KakaoIcon onClick={handleLogin}> 
-      <img src={kakaoIcon} />
+      <img src={kakaoIcon} alt='카카오 로그인' />
     </KakaoIcon>
   );
 };
+
 
 export default KakaoLogin;

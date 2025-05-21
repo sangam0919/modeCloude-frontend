@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EmotionDot from '../atoms/EmotionDot';
+import EmotionDot from '../../atoms/EmotionDot';
 
 const Card = styled.article`
   background:#f9f9f9;

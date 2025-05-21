@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../molecules/LoginButton';
+import Button from '../../molecules/login/LoginButton';
 import logo from "../../../images/logo2.png"
 import useModal from '../../../hooks/useModal';
-import LoginModal from '../../molecules/LoginModel'; 
+import LoginModal from '../../molecules/login/LoginModel'; 
 import CloudBackground from '../../atoms/CloudBackground';
 
 

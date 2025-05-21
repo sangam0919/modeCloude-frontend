@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import DiaryGrid from '../../molecules/DiaryGrid';
+import DiaryGrid from '../../molecules/main/DiaryGrid';
 import { Link } from 'react-router-dom'
 
 const Section = styled.section`

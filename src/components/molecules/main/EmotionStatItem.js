@@ -1,6 +1,6 @@
 // src/components/molecules/EmotionStatItem.jsx
 import styled from 'styled-components';
-import EmotionDot from '../atoms/EmotionDot';
+import EmotionDot from '../../atoms/EmotionDot';
 
 const Item = styled.div`
   display: flex;
