@@ -8,9 +8,9 @@ const TabWrap = styled.div`
     gap: 10px;
 `
 
-const Tab = ({children}) => {
+const Tab = ({children, onClick}) => {
   return (
-    <TabWrap>{children}</TabWrap>
+    <TabWrap onClick={onClick}>{children}</TabWrap>
   )
 }
 

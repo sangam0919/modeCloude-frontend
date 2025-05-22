@@ -18,7 +18,7 @@ const Btn = styled.button`
   }
 `;
 
-const Button = ({ children, color, weight, margin, background, border, radius }) => {
+const Button = ({ children, color, weight, margin, background, border, radius , onClick}) => {
   return (
     <Btn
       color={color}
@@ -27,6 +27,7 @@ const Button = ({ children, color, weight, margin, background, border, radius })
       background={background}
       border={border}
       radius={radius}
+      onClick={onClick}
     >
       {children}
     </Btn>
