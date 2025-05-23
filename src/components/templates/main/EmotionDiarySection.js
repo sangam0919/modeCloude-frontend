@@ -1,17 +1,32 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import EmotionGrid from '../../molecules/main/EmotionGrid';
 import SelectedEmotionInfo from '../../molecules/main/SelectedEmotionInfo';
 import EmotionActions from '../../molecules/main/EmotionActions';
 import useEmotion from '../../../hooks/useEmotion';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { saveEmotionOnly } from '../../../redux/ations';
+import useDiaryStatus from '../../../hooks/useDiaryStatus';
+import FeedbackModal from '../../atoms/FeedbackModal';
+import { useState } from 'react';
+import Test  from '../../pages/Test'
+
 const Section = styled.section`
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 `;
+
+const Section2 = styled.section`
+  background: white;
+  border-radius: 15px;
+  max-height: 600px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+`
 
 const Divider = styled.hr`
   margin: 25px 0;
@@ -19,10 +34,33 @@ const Divider = styled.hr`
   border-top: 1px dashed #e0e0e0;
 `;
 
-export default function EmotionDiarySection() {
+export default function EmotionDiarySection({ user, selectedEmotion, aiEmotion }) {
   const navigate = useNavigate();
-  const {emotions, selected, setSelected} = useEmotion();
+  const { emotions, selected, setSelected } = useEmotion();
   const selObj = emotions.find((e) => e.id === selected);
+  const dispatch = useDispatch();
+  const { isDone, refetchStatus } = useDiaryStatus();
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [feedbackModal, setFeedbackModal] = useState({
+    isOpen: false,
+    type: 'success',
+    message: { title: '', desc: '' },
+  });
+
+  if (isDone) {
+    return (
+      <Section2>
+        <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>☁️ 당신의 구름 갤러리</h2>
+        <Test />
+        <p style={{ textAlign: 'center', marginTop: '10px', color: '#666' }}>
+            일기를 쓰면 구름 안의 추억이 자라나요 🌱
+        </p>
+        {/* <h3 className="section-title">오늘은 이미 감정 또는 일기를 작성하셨어요 😊</h3>
+        <p style={{ textAlign: 'center', color: '#888' }}>내일 다시 이용해 주세요.</p> */}
+      </Section2>
+    );
+  }
 
   const handleWrite = () => {
     if (!selObj) return;
@@ -31,35 +69,105 @@ export default function EmotionDiarySection() {
       emoji: selObj.emoji,
       label: selObj.name,
     }).toString();
-    
-    console.log('최종 URL:', `/write?${query}`);
+
     navigate(`/write?${query}`);
   };
-  const handleRecord = () => console.log('감정만 기록하기 클릭');
+
+  const handleSaveEmotion = () => {
+    if (!user || !user.user?.uid || !selected) {
+      setFeedbackModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '입력 누락',
+          desc: '사용자 정보 또는 감정 선택이 누락되었습니다.',
+        },
+      });
+      return;
+    }
+
+    setConfirmModalOpen(true); // 확인 모달 열기
+  };
+
+  const doSaveEmotion = async () => {
+    const data = {
+      user_id: user.user.uid,
+      userEmotion: selected,
+      selectEmotion: aiEmotion || null,
+    };
+
+    try {
+      await dispatch(saveEmotionOnly(data));
+      setFeedbackModal({
+        isOpen: true,
+        type: 'success',
+        message: {
+          title: '감정 기록 완료!',
+          desc: '감정이 성공적으로 기록되었습니다!',
+        },
+      });
+      navigate('/main?refetch=true');
+      await refetchStatus();
+    } catch (error) {
+      setFeedbackModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '감정 기록 실패',
+          desc: '감정 기록 중 오류가 발생했습니다. 다시 시도해주세요.',
+        },
+      });
+      console.error('감정 기록 실패:', error);
+    } finally {
+      setConfirmModalOpen(false);
+    }
+  };
 
   return (
-    <Section>
-    <h3 className="section-title">오늘의 감정을 선택하고 이야기를 들려주세요</h3>
+    <>
+      <Section>
+        <h3 className="section-title">오늘의 감정을 선택하고 이야기를 들려주세요</h3>
+        <EmotionGrid items={emotions} selected={selected} onSelect={setSelected} />
+        {selObj && (
+          <>
+            <Divider />
+            <SelectedEmotionInfo
+              mood={selObj.id}
+              emoji={selObj.emoji}
+              text={`오늘은 ${selObj.name}하신가요?`}
+            />
+            <EmotionActions onWrite={handleWrite} onRecord={handleSaveEmotion} />
+          </>
+        )}
+      </Section>
 
-    <EmotionGrid items={emotions} selected={selected} onSelect={setSelected} />
-
-    {selObj && (
-      <>
-        <Divider />
-        <SelectedEmotionInfo
-          mood={selObj.id}
-          emoji={selObj.emoji}
-          text={`오늘은 ${selObj.name}하신가요?`}
+      {/* 확인 모달 */}
+      {confirmModalOpen && (
+        <FeedbackModal
+          type="check"
+          customMessage={{
+            title: '정말로 감정만 기록할까요?',
+            desc: '일기를 작성하지 않고 감정만 기록됩니다.',
+          }}
+          showButton
+          buttonText="기록하기"
+          buttonColor="#b881c2"
+          showCancelButton
+          cancelText="돌아가기"
+          onConfirm={doSaveEmotion}
+          onCancel={() => setConfirmModalOpen(false)}
         />
-        <EmotionActions onWrite={handleWrite} onRecord={handleRecord} />
-      </>
-    )}
-  </Section>
+      )}
+
+      {/* 피드백 모달 */}
+      {feedbackModal.isOpen && (
+        <FeedbackModal
+          type={feedbackModal.type}
+          customMessage={feedbackModal.message}
+          onClose={() => setFeedbackModal({ ...feedbackModal, isOpen: false })}
+        />
+      )}
+    </>
   );
 }
-{/* 
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {['오늘의 일상', '나의 감정 탐색', '감사한 일 3가지', '목표와 계획'].map((tag) => (
-              <TemplateTag key={tag}>{tag}</TemplateTag>
-            ))}
-          </div> */}
+

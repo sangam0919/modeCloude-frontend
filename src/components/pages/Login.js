@@ -13,14 +13,17 @@ const Wrap = styled.div`
     position: relative;
 `
 
-const Login = () => {
+const Login = ({closeModal, isAnimating ,isOpen}) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
     <Wrap>
       <LandingPage onStart={() => setModalOpen(true)} />
-      {modalOpen && <LoginModal />}
+      {/* {modalOpen && */}
+       {isOpen && (
+  <LoginModal onClose={closeModal} isAnimating={isAnimating} />
+)}
     </Wrap>
     </>
   );

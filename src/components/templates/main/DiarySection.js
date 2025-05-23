@@ -34,10 +34,12 @@ export default function DiarySection({ title, diaries, viewMoreText, onViewMore,
       <Title>{title}</Title>
       <DiaryGrid diaries={diaries} />
       {viewMoreText && (
-        <ViewMore to={viewMoreTo || '#'} onClick={onViewMore}>
+        <ViewMore to={viewMoreTo || '#'}>
           {viewMoreText}
         </ViewMore>
       )}
     </Section>
   );
 }
+
+// onClick={onViewMore}

@@ -65,6 +65,17 @@ const NavLinks = styled.div`
       color: #a472c3;
     }
   }
+  @media (max-width: 768px) {
+  position: static;
+  transform: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 10px;
+}
 `;
 
 const ProfileSection = styled.div`

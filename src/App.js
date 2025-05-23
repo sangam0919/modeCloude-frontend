@@ -4,6 +4,7 @@ import Write from "./components/pages/Write";
 import { Route, Routes } from "react-router-dom";
 import Main from "./components/pages/Main";
 import Edit from './components/pages/Edit';
+import Test from "./components/pages/Test";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/detail" element={<Detail/>} />
         <Route path="/main" element={<Main />} />
         <Route path="/write" element={<Write/>} />
-        <Route path="/Edit" element={<Edit/>} />
+        <Route path="/edit" element={<Edit/>} />
+        <Route path="/test" element={<Test/>} />
       </Routes>
     </div>
   );

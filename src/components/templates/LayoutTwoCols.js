@@ -11,6 +11,8 @@ const Grid = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;     /* 모바일-한-줄 */
+    flex-direction: column; // 모바일에선 위아래로
+    gap: 20px;
   }
 `;
 

@@ -1,26 +1,29 @@
-import { useState } from 'react';
+// src/hooks/useModal.js
+import { useState, useCallback } from 'react';
 
-const useModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+const useModal = (animationDuration = 500) => {
+  const [isVisible, setIsVisible] = useState(false);  // 실제로 렌더링되는지
+  const [isAnimating, setIsAnimating] = useState(false);  // 애니메이션 중인지
 
-  const openModal = () => {
-    setIsAnimating(true); 
+  const openModal = useCallback(() => {
+    setIsVisible(true);
+    setIsAnimating(true);
+  }, []);
 
+  const closeModal = useCallback(() => {
+    setIsAnimating(false);
     setTimeout(() => {
-      setIsOpen(true);
-    }, 500);
+      setIsVisible(false);
+    }, animationDuration);
+  }, [animationDuration]);
+
+  return {
+    isOpen: isVisible,
+    isAnimating,
+    openModal,
+    closeModal,
+    animationDuration,
   };
-
-  const closeModal = () => {
-    setIsOpen(false); 
-
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 500);
-  };
-
-  return { isOpen, isAnimating, openModal, closeModal };
 };
 
 export default useModal;

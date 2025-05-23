@@ -1,14 +1,20 @@
 import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css'; // ✅ 반드시 import!
+import '@toast-ui/editor/dist/toastui-editor.css'; 
 import { GradientBtn } from '../../atoms/RoundButton';
+import FeedbackModal from '../../atoms/FeedbackModal';
+import useUpload from '../../../hooks/useUpload';
+import { analyzeEmotion } from '../../../api/write';    
+import useEmotion from '../../../hooks/useEmotion';   
 
 const WritingArea = styled.div`
   background: white;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 25px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const TitleInput = styled.input`
@@ -32,45 +38,6 @@ const TitleInput = styled.input`
   }
 `;
 
-const Toolbar = styled.div`
-  display: flex;
-  gap: 15px;
-  padding: 15px 0;
-  border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 15px;
-`;
-
-const toolbarBtnStyles = css`
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  font-size: 1.1rem;
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f5f5f5;
-    color: #b881c2;
-  }
-`;
-
-const ToolbarBtn = styled.button`
-  ${toolbarBtnStyles}
-`;
-
-const Separator = styled.div`
-  width: 1px;
-  height: 20px;
-  background: #f0f0f0;
-  margin: 0 5px;
-`;
-
 const WordCount = styled.div`
   text-align: right;
   color: #999;
@@ -78,17 +45,72 @@ const WordCount = styled.div`
   margin-top: 10px;
 `;
 
-const DiaryEditor = () => {
-  const [title, setTitle] = useState('');
-  const editorRef = useRef();
+const DiaryEditor = ({ title, setTitle, imageUrl, setImageUrl, editorRef, setAiEmotion, setEmotion }) => {
+  const uploadImage = useUpload();
+  const { emotions, setEmotionByLabel } = useEmotion(); 
 
-  // 이미지 업로드 기능 (Base64 변환)
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: 'success',
+    message: { title: '', desc: '' }
+  });
+
+  const handleAnalyzeClick = async () => {
+    const editorInstance = editorRef.current?.getInstance();
+    const markdown = editorInstance?.getMarkdown() || '';
+
+    if (!markdown.trim()) {
+      setModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '내용 없음',
+          desc: '일기 내용을 입력해주세요.',
+        }
+      });
+      return;
+    }
+
+    const emotion = await analyzeEmotion(markdown, emotions);
+    const found = emotions.find((e) => e.id === emotion);
+
+    if (found) {
+      setEmotionByLabel(emotion);
+      setAiEmotion(found);
+      setModal({
+        isOpen: true,
+        type: 'success',
+        message: {
+          title: 'AI 감정 분석 완료!',
+          desc: `오늘의 감정은 "${found.name}"이에요 😊`
+        }
+      });
+    } else {
+      setModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '분석 실패',
+          desc: 'AI가 감정을 정확히 찾지 못했어요. 다시 시도해보세요.'
+        }
+      });
+    }
+  };
+
+  const handleModalClose = () => {
+    setModal({ ...modal, isOpen: false });
+  };
+
   const handleImageUpload = async (blob, callback) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      callback(reader.result, '업로드 이미지');
-    };
-    reader.readAsDataURL(blob);
+    try {
+      const url = await uploadImage(blob); 
+      if (url) {
+        setImageUrl(url);
+        callback(url, '업로드 이미지'); 
+      }
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+    }
   };
 
   const getContentLength = () => {
@@ -105,21 +127,10 @@ const DiaryEditor = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-{/* 
-      <Toolbar>
-        <ToolbarBtn><strong>B</strong></ToolbarBtn>
-        <ToolbarBtn><em>I</em></ToolbarBtn>
-        <ToolbarBtn><u>U</u></ToolbarBtn>
-        <Separator />
-        <ToolbarBtn>1.</ToolbarBtn>
-        <ToolbarBtn>📷</ToolbarBtn>
-        <ToolbarBtn>🎤</ToolbarBtn>
-      </Toolbar> */}
 
-      {/* Toast UI 에디터 추가 */}
       <Editor
         ref={editorRef}
-        height="770px"
+        height="600px"
         initialEditType="wysiwyg"
         previewStyle="vertical"
         initialValue=""
@@ -130,7 +141,20 @@ const DiaryEditor = () => {
       />
 
       <WordCount>{getContentLength()} 단어</WordCount>
-      <GradientBtn>검사하기</GradientBtn>
+      <GradientBtn onClick={handleAnalyzeClick}>검사하기</GradientBtn>
+
+      {modal.isOpen && (
+        <FeedbackModal
+          type={modal.type}
+          customMessage={modal.message}
+          showButton={true}
+          buttonText="확인"
+          buttonColor="#b881c2"
+          showCancelButton={false}
+          onConfirm={handleModalClose}
+          onClose={handleModalClose}
+        />
+      )}
     </WritingArea>
   );
 };

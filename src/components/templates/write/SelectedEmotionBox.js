@@ -30,12 +30,12 @@ const SubText = styled.span`
   color: #888;
 `;
 
-export default function SelectedEmotionBox() {
+export default function SelectedEmotionBox({ setSelectedEmotion }) {
   const location = useLocation();
   const [emotion, setEmotion] = useState(null);
 
   useEffect(() => {
-    console.log('현재 URL:', window.location.href); 
+    // console.log('현재 URL:', window.location.href); 
     const params = new URLSearchParams(location.search);
     const mood = params.get('mood');
     const emoji = params.get('emoji');
@@ -44,9 +44,12 @@ export default function SelectedEmotionBox() {
     console.log(' 쿼리스트링 확인:', { mood, emoji, label });
 
     if (mood && emoji && label) {
-      setEmotion({ mood, emoji, label });
+      const emotionObj = { mood, emoji, label };
+      setEmotion(emotionObj); 
+      setSelectedEmotion(emotionObj); 
     }
-  }, [location]);
+    
+  }, [location, setSelectedEmotion]);
 
   if (!emotion) return null;
 

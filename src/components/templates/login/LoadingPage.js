@@ -61,10 +61,10 @@ font-size: 1.4rem;
 
 
 const LandingPage = () => {
-  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen, openModal, closeModal } = useModal(300,200);
   return (
     <>
-    <CloudBackground /> {/* ✅ 구름 배경은 가장 위에 */}
+    <CloudBackground /> 
     <Container>
     <Logo  className={isOpen ? "disabled" : ""} src={logo} onClick={openModal} alt="무드 구름 로고" />
     <Title className={isOpen ? "disabled" : ""}>Mood Cloud</Title>

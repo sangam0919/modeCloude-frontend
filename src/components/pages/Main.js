@@ -9,6 +9,8 @@ import MainGreetingSection from '../templates/main/MainGreetingSection';
 import FooterActions from '../templates/FooterActions';
 import Container from '../atoms/Container';
 import styled from 'styled-components';
+import useUser from '../../hooks/useUser';
+import { useLocation } from 'react-router-dom';
 
 const Wrap = styled.div`
   min-height: 100vh;
@@ -16,9 +18,13 @@ const Wrap = styled.div`
 `
 
 const Main = () => {
+  const user = useUser();
+  const location = useLocation();
+  const refetchKey = new URLSearchParams(location.search).get('refetch') || 'default';
+
   const leftColumn = (
     <>
-      <EmotionDiarySection />
+     <EmotionDiarySection key={refetchKey} user={user} />
       <RecentDiariesSection />
       <OtherDiariesSection />
     </>

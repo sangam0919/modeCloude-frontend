@@ -39,23 +39,29 @@ const SettingLabal = styled.div`
 `
 
 
-const Lock = () => {
-  const [selected, setSelected] = useState('public');
-
+const Lock = ({ isPublic, setIsPublic }) => {
   return (
     <Wrap>
       <Title>일기 설정</Title>
       <SettingLabal>공개 설정</SettingLabal>
       <BtnAll>
-      <LockButton active={selected === 'public'} onClick={() => setSelected('public')}>
-        전체 공개
-      </LockButton>
-      <LockButton active={selected === 'private'} onClick={() => setSelected('private')}>
-        나만 보기
-      </LockButton>
-    </BtnAll>
+        <LockButton
+          active={isPublic === true}
+          onClick={() => {
+             console.log('전체 공개 클릭됨');
+            setIsPublic(true)
+          }}>
+          전체 공개
+        </LockButton>
+        <LockButton
+          active={isPublic === false}
+          onClick={() => setIsPublic(false)}
+        >
+          나만 보기
+        </LockButton>
+      </BtnAll>
     </Wrap>
-  )
-}
+  );
+};
 
-export default Lock
+export default Lock;
