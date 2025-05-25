@@ -6,6 +6,7 @@ import useWeather from '../../../hooks/useWeather';
 import EmotionStatsWidget from './EmotionStatsWidget';
 // import WeatherWidget from './WeatherWidget';
 // import StatsWidget   from './StatsWidget';
+import useMainInfo from '../../../hooks/useMainInfo.js';
 
 const Aside = styled.aside`
 display: flex;
@@ -15,16 +16,21 @@ display: flex;
 
 export default function Sidebar() {
   const weather = useWeather('Seoul');
+  const { streak, weekDone, diaryDates } = useMainInfo();
+
+
+  console.log("streak", streak);
+  console.log("weekDone", weekDone); // ['월', '화', ...]
+  console.log("diaryDates", diaryDates); // [숫자 날짜만 있어야 함]
   return (
     <Aside>
       <StreakWidget
-        streak={7}
-        weekDone={['월','화','수','목','금','토']}
-        diaryDates={[26,27,28,29,30]}
-        today={new Date(2025,2,30)}
+        streak={streak}
+        weekDone={weekDone}
+        diaryDates={diaryDates}
+        today={new Date()}
       />
 
-      {/* 나중에 날씨·통계 위젯 추가 */}
       <WeatherWidget weather={weather} />
       <EmotionStatsWidget />
     </Aside>

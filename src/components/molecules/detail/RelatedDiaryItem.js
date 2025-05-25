@@ -13,7 +13,7 @@ const Item = styled.div`
     border-bottom: none;
     padding-bottom: 0;
   }
-`;
+`;  
 
 const Content = styled.div`
   flex: 1;

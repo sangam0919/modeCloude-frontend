@@ -1,5 +1,3 @@
-// src/redux/actions.js
-import axios from 'axios';
 import {FETCH_DIARIES_REQUEST,FETCH_DIARIES_SUCCESS,FETCH_DIARIES_FAILURE,} from './actionTypes';
 import { fetchMyDiaries as getDiariesFromApi } from '../api/diary';
 import { SAVE_EMOTION_ONLY_REQUEST, SAVE_EMOTION_ONLY_SUCCESS, SAVE_EMOTION_ONLY_FAILURE,} from './actionTypes';

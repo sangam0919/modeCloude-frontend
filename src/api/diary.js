@@ -21,3 +21,35 @@ export const checkTodayWritten = async () => {
   });
   return res.data; 
 };
+
+// 스트릭
+export const fetchStreak = async () => {
+  const res = await axios.get(`${API_URL}/main/streak`, {
+    withCredentials: true, // ✅ 꼭 필요함
+  });
+  return res.data.streak;
+};
+
+// 요일 
+export const fetchWrittenWeekdays = async () => {
+  const res = await axios.get(`${API_URL}/main/written-weekdays`, {
+    withCredentials: true, // ✅ 꼭 필요함
+  });
+  return res.data.weekdays;
+};
+
+// 날짜 
+export const fetchWrittenDates = async (month) => {
+  const res = await axios.get(`${API_URL}/main/written-dates?month=${month}`, {
+    withCredentials: true, // ✅ 꼭 필요함
+  });
+  return res.data;
+};
+
+// 상세 조회 
+export const fetchDiaryDetail = async (id) => {
+  const res = await axios.get(`${API_URL}/detail/${id}`, {
+    withCredentials: true,
+  });
+  return res.data;
+};
