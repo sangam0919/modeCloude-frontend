@@ -61,12 +61,14 @@ export default function DiaryCard({
   moodColor,
   moodLabel,
   visibility,
-  comments
+  comments,
+  diary
 }) {
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/edit'); // ✅ 클릭 시 /edit 페이지로 이동
+    if(!diary) return;
+    navigate(`/detail/${String(diary.id).trim()}`);
   };
   return (
     <Card onClick={handleClick}> 

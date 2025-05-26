@@ -1,5 +1,3 @@
-// src/components/molecules/GreetingBox.jsx
-
 import React from 'react';
 import styled from 'styled-components';
 

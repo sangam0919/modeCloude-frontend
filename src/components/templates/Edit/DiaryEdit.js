@@ -1,9 +1,13 @@
-// src/templates/DiaryEditor.jsx
-import React, { useRef, useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { diaryDetail } from '../../../hooks/simpleData'; // 데이터 경로에 맞게 수정
+import { parseMarkdownWithFallback } from '../../../utills/parseMarkdown.js';
+import { GradientBtn } from '../../atoms/RoundButton';
+import FeedbackModal from '../../atoms/FeedbackModal';
+import useUpload from '../../../hooks/useUpload';
+import { analyzeEmotion } from '../../../api/write';
+import useEmotion from '../../../hooks/useEmotion';
 
 const WritingArea = styled.div`
   background: white;
@@ -33,42 +37,6 @@ const TitleInput = styled.input`
   }
 `;
 
-const Toolbar = styled.div`
-  display: flex;
-  gap: 15px;
-  padding: 15px 0;
-  border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 15px;
-`;
-
-const toolbarBtnStyles = css`
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  font-size: 1.1rem;
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f5f5f5;
-    color: #b881c2;
-  }
-`;
-
-const ToolbarBtn = styled.button`${toolbarBtnStyles}`;
-const Separator = styled.div`
-  width: 1px;
-  height: 20px;
-  background: #f0f0f0;
-  margin: 0 5px;
-`;
-
 const WordCount = styled.div`
   text-align: right;
   color: #999;
@@ -76,25 +44,82 @@ const WordCount = styled.div`
   margin-top: 10px;
 `;
 
-const DiaryEditor = () => {
-  const editorRef = useRef();
+const DiaryEdit = ({
+  diary,
+  aiEmotion,
+  setAiEmotion,
+  title,
+  setTitle,
+  imageUrl,
+  setImageUrl,
+  editorRef
+}) => {
+  const uploadImage = useUpload();
+  const { emotions, setEmotionByLabel } = useEmotion();
 
-  // 📌 샘플 데이터에서 불러옴
-  const [title, setTitle] = useState(diaryDetail.title);
-  const initialContent = diaryDetail.content;
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: 'success',
+    message: { title: '', desc: '' }
+  });
 
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.getInstance().setMarkdown(initialContent);
-    }
-  }, [initialContent]);
+  const imageUrls = diary?.images?.map(img => img.image_url) || [];
+  console.log('초기 diary.content:', diary?.content);
+  const initialContent = parseMarkdownWithFallback(diary?.content || '', imageUrls);
 
   const handleImageUpload = async (blob, callback) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      callback(reader.result, '업로드 이미지');
-    };
-    reader.readAsDataURL(blob);
+    try {
+      const url = await uploadImage(blob); // 서버 업로드 후 URL 반환
+      callback(url, '업로드 이미지'); // 마크다운에 삽입
+    } catch (err) {
+      console.error('이미지 업로드 실패:', err);
+    }
+  };
+
+  const handleAnalyzeClick = async () => {
+    const markdown = editorRef.current?.getInstance().getMarkdown() || '';
+
+    if (!markdown.trim()) {
+      setModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '내용 없음',
+          desc: '일기 내용을 입력해주세요.',
+        }
+      });
+      return;
+    }
+
+    // const emotion = await analyzeEmotion(markdown, emotions);
+    const emotionLabel = await analyzeEmotion(markdown);
+    const found = emotions.find((e) => e.id === emotionLabel || e.name === emotionLabel);
+
+    if (found) {
+      setEmotionByLabel(found.name);
+      setAiEmotion(found);
+      setModal({
+        isOpen: true,
+        type: 'success',
+        message: {
+          title: 'AI 감정 분석 완료!',
+          desc: `오늘의 감정은 "${found.name}"이에요 😊`
+        }
+      });
+    } else {
+      setModal({
+        isOpen: true,
+        type: 'error',
+        message: {
+          title: '분석 실패',
+          desc: 'AI가 감정을 정확히 찾지 못했어요. 다시 시도해보세요.'
+        }
+      });
+    }
+  };
+
+  const handleModalClose = () => {
+    setModal({ ...modal, isOpen: false });
   };
 
   const getContentLength = () => {
@@ -111,31 +136,35 @@ const DiaryEditor = () => {
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      {/* <Toolbar>
-        <ToolbarBtn><strong>B</strong></ToolbarBtn>
-        <ToolbarBtn><em>I</em></ToolbarBtn>
-        <ToolbarBtn><u>U</u></ToolbarBtn>
-        <Separator />
-        <ToolbarBtn>1.</ToolbarBtn>
-        <ToolbarBtn>📷</ToolbarBtn>
-        <ToolbarBtn>🎤</ToolbarBtn>
-      </Toolbar> */}
-
       <Editor
         ref={editorRef}
         height="770px"
         initialEditType="wysiwyg"
         previewStyle="vertical"
         useCommandShortcut={true}
-        initialValue="" // setMarkdown으로 설정
+        initialValue={initialContent}
         hooks={{
           addImageBlobHook: handleImageUpload,
         }}
       />
 
       <WordCount>{getContentLength()} 단어</WordCount>
+      <GradientBtn onClick={handleAnalyzeClick}>검사하기</GradientBtn>
+
+      {modal.isOpen && (
+        <FeedbackModal
+          type={modal.type}
+          customMessage={modal.message}
+          showButton={true}
+          buttonText="확인"
+          buttonColor="#b881c2"
+          showCancelButton={false}
+          onConfirm={handleModalClose}
+          onClose={handleModalClose}
+        />
+      )}
     </WritingArea>
   );
 };
 
-export default DiaryEditor;
+export default DiaryEdit;

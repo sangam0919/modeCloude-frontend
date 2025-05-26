@@ -1,28 +1,25 @@
-// src/components/templates/Sidebar.jsx
 import styled from 'styled-components';
 import WeatherWidget from '../main/WeatherWidget';
 import useWeather from '../../../hooks/useWeather';
 import EmotionAi from './EmotionAi';
-import Lock from '../../molecules/edit/Lock'
+import Lock from '../../molecules/edit/Lock';
 import SelectedEmotionBox from './SelectedEmotionBox';
-import { useLocation } from 'react-router-dom';
+
 const Aside = styled.aside`
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 `;
 
-export default function Sidebar({mood,emoji,label}) {
+export default function Sidebar({ diary, isPublic, setIsPublic, aiEmotion }) {
   const weather = useWeather('Seoul');
-  const location = useLocation();
-  const isWritePage = location.pathname === '/write';
+
   return (
     <Aside>
-     {isWritePage && <SelectedEmotionBox />}
-      {/* mood={mood} emoji={emoji} label={label} */}
-      <EmotionAi />
+      <SelectedEmotionBox diary={diary} />
+      <EmotionAi aiEmotion={aiEmotion} /> 
       <WeatherWidget weather={weather} />
-      <Lock />
+      <Lock isPublic={isPublic} setIsPublic={setIsPublic} />
     </Aside>
   );
 }

@@ -5,7 +5,7 @@ import EmotionActions from '../../molecules/main/EmotionActions';
 import useEmotion from '../../../hooks/useEmotion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { saveEmotionOnly } from '../../../redux/ations';
+import { saveEmotionOnly } from '../../../redux/actions/diary';
 import useDiaryStatus from '../../../hooks/useDiaryStatus';
 import FeedbackModal from '../../atoms/FeedbackModal';
 import { useState } from 'react';

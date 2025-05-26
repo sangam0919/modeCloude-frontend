@@ -71,11 +71,13 @@ const DiaryEditor = ({ title, setTitle, imageUrl, setImageUrl, editorRef, setAiE
       return;
     }
 
-    const emotion = await analyzeEmotion(markdown, emotions);
-    const found = emotions.find((e) => e.id === emotion);
+    // const emotion = await analyzeEmotion(markdown, emotions);
+    const emotionLabel = await analyzeEmotion(markdown);
+    // const found = emotions.find((e) => e.id === emotion);
+    const found = emotions.find((e) => e.name === emotionLabel);
 
     if (found) {
-      setEmotionByLabel(emotion);
+      setEmotionByLabel(found.name);
       setAiEmotion(found);
       setModal({
         isOpen: true,

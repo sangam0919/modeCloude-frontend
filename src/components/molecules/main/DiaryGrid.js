@@ -20,6 +20,7 @@ export default function DiaryGrid({ diaries }) {
         return (
           <DiaryCard
             key={d.id}
+            diary={d} 
             date={d.createdAt.slice(0, 10)}
             title={d.title}
             preview={d.content?.slice(0, 80) || ''}

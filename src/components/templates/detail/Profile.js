@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { OutlineBtn } from '../../atoms/RoundButton'
 import styled from 'styled-components'
-import { diaryDetail  } from '../../../hooks/simpleData'
 
 const Wrap = styled.div`
     box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 15px;
@@ -61,13 +60,20 @@ const Widget = styled.div`
     padding: 20px;
 `
 
-const Profile = () => {
-    const { user_id } = diaryDetail
+const Profile = ({diary}) => {
+    if (!diary) return null;
+
   return (
     <Wrap>
-      <Avatar />
-      <AvatarName>{user_id}</AvatarName>
-      <AvatarBio>일상의 소소한 행복을 기록하는 글쓰기를 좋아합니다. 음악과 카페 탐방이 취미입니다.</AvatarBio>
+        <Avatar
+        style={{
+            backgroundImage: `url(${diary.writer?.profile_image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+        }}
+        />
+       <AvatarName>{diary?.writer?.nick_name}</AvatarName>
+        <AvatarBio>일상의 소소한 행복을 기록하는 글쓰기를 좋아합니다.</AvatarBio>
       <OutlineBtn>팔로우</OutlineBtn>
       <AuthorStats>
         <AuthorStat>

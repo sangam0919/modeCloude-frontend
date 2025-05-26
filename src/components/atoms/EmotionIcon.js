@@ -29,14 +29,14 @@ const Circle = styled.div`
 
 const Emoji = styled.span`
   font-size: ${({ fontSize }) => fontSize}px;
-  line-height: 1; /* 세로 정렬 정확하게 */
+  line-height: 1; 
 `;
 
 export default function EmotionIcon({
   emoji = '😊',
-  mood,       // 감정 ID (ex: happy, sad 등)
-  color,      // DB에서 받아온 color (우선 적용됨)
-  bgColor,    // 날씨용 등 다른 용도
+  mood,       
+  color,     
+  bgColor,   
   diameter = 60,
   fontSize = 20,
   hoverScale = 1.1,

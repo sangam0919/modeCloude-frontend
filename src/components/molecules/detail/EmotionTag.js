@@ -5,6 +5,7 @@ const Wrap = styled.div`
     display: flex;
     align-items: center;
     gap: 6px;
+    background-color: ${({ $color }) => $color || 'transparent'};
     transform: scale(0.85); 
     transform-origin: top left; 
 `;
@@ -17,11 +18,11 @@ const Label = styled.span`
   top: 1px; 
 `;
 
-export default function EmotionIconWithLabel({ emoji, mood, label, ...rest }) {
+export default function EmotionIconWithLabel({ emoji, mood, label, color, ...rest }) {
   return (
     <Wrap>
-      <EmotionIcon emoji={emoji} mood={mood} diameter={28} fontSize={16} {...rest} />
-      <Label>행복</Label>
+      <EmotionIcon emoji={emoji} mood={mood} color={color} diameter={28} fontSize={16} {...rest} />
+      <Label $color={color}>{label}</Label>
     </Wrap>
   );
 }

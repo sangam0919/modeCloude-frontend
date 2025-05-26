@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import EmotionIcon from '../../atoms/EmotionIcon';
+import EmotionIcon from '../../atoms/EmotionIcon'; // emoji 렌더링용
+import useEmotion from '../../../hooks/useEmotion'; // 전체 감정 리스트
 
 const Box = styled.div`
   background: white;
@@ -30,23 +30,22 @@ const SubText = styled.span`
   color: #888;
 `;
 
-export default function SelectedEmotionBox() {
-  const location = useLocation();
+export default function SelectedEmotionBox({ diary }) {
+  const { emotions } = useEmotion();
   const [emotion, setEmotion] = useState(null);
 
   useEffect(() => {
-    console.log('현재 URL:', window.location.href); 
-    const params = new URLSearchParams(location.search);
-    const mood = params.get('mood');
-    const emoji = params.get('emoji');
-    const label = params.get('label');
+    if (!diary?.emotionLog?.userEmotion) return;
 
-    console.log(' 쿼리스트링 확인:', { mood, emoji, label });
-
-    if (mood && emoji && label) {
-      setEmotion({ mood, emoji, label });
+    const matched = emotions.find(e => e.id === diary.emotionLog.userEmotion);
+    if (matched) {
+      setEmotion({
+        mood: matched.id,
+        emoji: matched.emoji,
+        label: matched.name,
+      });
     }
-  }, [location]);
+  }, [diary, emotions]);
 
   if (!emotion) return null;
 

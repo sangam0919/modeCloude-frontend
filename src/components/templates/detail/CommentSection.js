@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import DetailBtn from '../../molecules/detail/DetailBtn'; 
-import { diaryDetail } from '../../../hooks/simpleData';
+import DetailBtn from '../../molecules/detail/DetailBtn';
+import axios from 'axios';
+import { createComment } from '../../../api/diary'; 
+import useUser from '../../../hooks/useUser';
 
+// 스타일 생략 없이 그대로
 const Section = styled.div`
   background: white;
   border-radius: 15px;
@@ -96,6 +99,14 @@ const Author = styled.div`
   font-size: 0.9rem;
 `;
 
+const AvatarImg = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eee;
+`;
+
 const Time = styled.div`
   color: #999;
   font-size: 0.8rem;
@@ -124,71 +135,86 @@ const Action = styled.span`
   }
 `;
 
-export default function CommentSection() {
-  const [comments, setComments] = useState(diaryDetail.comments ?? []);
+export default function CommentSection({ diaryId, comments = [] }) {
+  const [localComments, setLocalComments] = useState(comments);
   const [inputValue, setInputValue] = useState('');
-
-
-  const handleSubmit = () => {
+  const user = useUser();   
+  console.log('user:', user);
+  console.log('user id:', user?.id);
+ 
+  const handleSubmit = async () => {
     if (!inputValue.trim()) return;
-
-    const newComment = {
-      id: comments.length + 1,
-      user: '익명 사용자', // 또는 로그인 유저 정보
-      content: inputValue,
-      created_at: new Date().toISOString(),
+  
+    const data = {
+      diary_id: diaryId,
+      user_id: user?.user?.uid,
+      content: inputValue
     };
-
-
-    setComments([...comments, newComment]);
-    setInputValue('');
+    console.log(' 댓글 전송 데이터:', data);
+    try {
+      const res = await createComment(data); // POST 요청
+      if (res.success) {
+        setLocalComments((prev) => [...prev, res.comment]);
+        setInputValue('');
+        alert('댓글 작성 완료 ')
+      }
+    } catch (err) {
+      console.error('댓글 등록 실패:', err);
+      alert('실패')
+    }
   };
+
   return (
     <Section>
-    <Header>
-      댓글 <Count>{comments.length}</Count>
-    </Header>
+      <Header>
+        댓글 <Count>{localComments.length}</Count>
+      </Header>
 
-    <InputArea>
-      <Avatar />
-      <InputWrapper>
-        <Input
-          placeholder="댓글을 남겨보세요..."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-        />
-        <SubmitButton>
-          <DetailBtn
-            icon="➤"
-            bg="#b881c2"
-            color="white"
-            hover="#a06fb1"
-            size="30px"
-            onClick={handleSubmit}
-          />
-        </SubmitButton>
-      </InputWrapper>
-    </InputArea>
-
-    <CommentList>
-      {comments.map((comment) => (
-        <CommentItem key={comment.id}>
+      <InputArea>
+        {user?.user?.profile ? (
+          
+          <AvatarImg src={user.user.profile} alt="프로필 이미지" />
+        ) : (
           <Avatar />
-          <Content>
-            <CommentHeader>
-              <Author>{comment.user}</Author>
-              <Time>방금 전</Time>
-            </CommentHeader>
-            <Text>{comment.content}</Text>
-            {/* <Actions>
-              <Action>좋아요</Action>
-              <Action>답글 달기</Action>
-            </Actions> */}
-          </Content>
-        </CommentItem>
-      ))}
-    </CommentList>
-  </Section>
+        )}
+        <InputWrapper>
+          <Input
+            placeholder="댓글을 남겨보세요..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+          />
+          <SubmitButton>
+            <DetailBtn
+              icon="➤"
+              bg="#b881c2"
+              color="white"
+              hover="#a06fb1"
+              size="30px"
+              onClick={handleSubmit}
+            />
+          </SubmitButton>
+        </InputWrapper>
+      </InputArea>
+
+      <CommentList>
+        {localComments.map((comment) => (
+          <CommentItem key={comment.id}>
+             {comment.writer?.profile_image ? (
+          <AvatarImg src={comment.writer.profile_image} alt="profile" />
+            ) : (
+              <Avatar /> 
+            )}
+            <Content>
+              <CommentHeader>
+                <Author>{comment.writer?.nick_name}</Author>
+                <Time>방금 전</Time>
+              </CommentHeader>
+              <Text>{comment.content}</Text>
+            </Content>
+          </CommentItem>
+        ))}
+      </CommentList>
+    </Section>
   );
 }

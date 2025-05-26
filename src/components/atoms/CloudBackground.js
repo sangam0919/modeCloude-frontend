@@ -1,4 +1,3 @@
-// src/components/atoms/CloudBackground.jsx
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 

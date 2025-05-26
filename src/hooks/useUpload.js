@@ -1,6 +1,6 @@
 import { uploadImage } from '../api/write';
 
-const useUploadImage = () => {
+const useUpload = () => {
   return async (blob) => {
     try {
       const url = await uploadImage(blob);
@@ -12,4 +12,4 @@ const useUploadImage = () => {
   };
 };
 
-export default useUploadImage;
+export default useUpload;

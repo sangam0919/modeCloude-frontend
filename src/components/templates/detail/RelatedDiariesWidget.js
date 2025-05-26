@@ -1,8 +1,9 @@
-// templates/RelatedDiariesWidget.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import RelatedDiaryItem from '../../molecules/detail/RelatedDiaryItem';
-import { allDiaries } from '../../../hooks/simpleData'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchFollowerDiary } from '../../../redux/actions/diary';
+
 const Widget = styled.div`
   background: white;
   border-radius: 15px;
@@ -22,32 +23,47 @@ const List = styled.div`
   gap: 15px;
 `;
 
-
-
-
 const getRandomItems = (arr, count) => {
+  if (!arr || arr.length === 0) return [];
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+  return shuffled.slice(0, Math.min(count, arr.length));
 };
 
 const getRandomMood = (diaries) => {
-  const moods = [...new Set(diaries.map(d => d.mood))]; // 중복 제거
+  const moods = [...new Set(diaries.map(d => d.emotion?.id?.toLowerCase()))];
   return moods[Math.floor(Math.random() * moods.length)];
 };
 
+const RelatedDiariesWidget = ({ currentMood }) => {
+  const dispatch = useDispatch();
+  const { followedDiaries = [], loading } = useSelector((state) => state.diary);
 
-  const RelatedDiariesWidget = () => {
-  const randomMood = getRandomMood(allDiaries);
-  const related = allDiaries.filter((d) => d.mood === randomMood);
+  useEffect(() => {
+    dispatch(fetchFollowerDiary());
+  }, [dispatch]);
+
+  if (loading) return <div>불러오는 중...</div>;
+  if (!followedDiaries || followedDiaries.length === 0) return null;
+
+  const moodToUse = currentMood?.toLowerCase() || getRandomMood(followedDiaries);
+  const related = followedDiaries.filter(
+    (d) => d.emotion?.id?.toLowerCase() === moodToUse
+  );
+
   const selected = getRandomItems(related, 3);
-
+  if (selected.length === 0) return null;
 
   return (
     <Widget>
       <Title>관련 일기</Title>
       <List>
         {selected.map((item, i) => (
-          <RelatedDiaryItem key={i} emoji={item.emoji} title={item.title} date={item.date} />
+          <RelatedDiaryItem
+            key={i}
+            emoji={item.emotion?.emoji || '🙂'} 
+            title={item.title}
+            date={item.createdAt?.slice(0, 10)}
+          />
         ))}
       </List>
     </Widget>

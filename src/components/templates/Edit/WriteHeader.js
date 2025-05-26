@@ -15,16 +15,16 @@ const ButtonGroup = styled.div`
   gap: 10px;
 `
 
-const WriteHeader = () => {
+const WriteHeader = ({ onSave, onCancel }) => {
   return (
     <Wrap>
       <WriteTitle />
       <ButtonGroup>
-        <OutlineBtn>취소</OutlineBtn>
-        <GradientBtn>저장하기</GradientBtn>
+        <OutlineBtn onClick={onCancel}>취소</OutlineBtn>
+        <GradientBtn onClick={onSave}>저장하기</GradientBtn>
       </ButtonGroup>
     </Wrap>
-  )
-}
+  );
+};
 
 export default WriteHeader

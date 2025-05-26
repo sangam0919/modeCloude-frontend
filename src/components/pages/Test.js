@@ -4,6 +4,8 @@ import happyCloud2 from '../../images/happy2.png';
 import testImg1 from '../../images/logo.png';
 import testImg2 from '../../images/logo2.png';
 import img_123 from '../../images/스크린샷 2024-07-04 160330_1747990912479.png'
+import sad from '../../images/sad.png'
+
 const float = keyframes`
   0% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -127,7 +129,7 @@ const CloudGallery = () => {
   ];
   
 
-  const cloudFace = happyCloud2;
+  const cloudFace = images.length < 5 ? sad : happyCloud2;
 
   return (
     <Wrapper>

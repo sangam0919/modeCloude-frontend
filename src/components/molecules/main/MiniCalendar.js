@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import CalHeader from './CalHeader';
 import Circle from '../../atoms/Circle';
-import Dot from '../../atoms/EmotionDot';
+import EmotionDot from '../../atoms/EmotionDot';
 import { addMonths, startOfMonth, endOfMonth, getDay } from 'date-fns';
-
+import EmotionIcon from '../../atoms/EmotionIcon';
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 32px);
@@ -23,7 +23,6 @@ export default function MiniCalendar({ baseDate, diaryDates = [], onPrev, onNext
     for (let d = 1; d <= end.getDate(); d++) arr.push(d);
     return arr;
   }, [baseDate]);
-
   return (
     <>
       <CalHeader label={label} onPrev={onPrev} onNext={onNext} />
@@ -32,25 +31,23 @@ export default function MiniCalendar({ baseDate, diaryDates = [], onPrev, onNext
           <span key={d} style={{ fontSize: '.8rem', color: '#999' }}>{d}</span>
         ))}
 
-        {cells.map((d, i) =>
-          d === null ? (
-            <div key={i} />
-          ) : (
-            <Circle
-              key={i}
-              size={32}
-              variant={d === baseDate.getDate() ? 'fill' : undefined}
-              style={{ position: 'relative' }}
-            >
-              {d}
+{cells.map((d, i) => {
+  if (d === null) return <div key={i} />;
 
-              {/* ✅ Dot 조건부 표시 */}
-              {diaryDates.includes(d) && (
-                <Dot />
-              )}
-            </Circle>
-          )
-        )}
+  const dayData = diaryDates.find(item => item.day === d);
+
+        return (
+          <Circle
+            key={i}
+            size={32}
+            variant={d === baseDate.getDate() ? 'fill' : undefined}
+            style={{ position: 'relative' }}
+          >
+            {d}
+            {diaryDates.includes(d) && <EmotionDot emotion="happy" />}
+          </Circle>
+        );
+      })}
       </Grid>
     </>
   );
