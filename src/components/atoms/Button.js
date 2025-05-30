@@ -5,7 +5,7 @@ const Btn = styled.button`
   color: ${({ color }) => color || '#333'};
   font-weight: ${({ weight }) => weight || 'normal'};
   margin: ${({ margin }) => margin || '0'};
-  background-color: ${({ background }) => background || '#ffffff'};
+  background: ${({ background }) => background || 'linear-gradient(135deg, #b881c2, #a06fb1)'};
   border: ${({ border }) => border || '1px solid #ccc'};
   border-radius: ${({ radius }) => radius || '15px'};
   padding: 10px 16px;
