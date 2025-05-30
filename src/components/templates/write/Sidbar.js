@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import WeatherWidget from '../main/WeatherWidget';
 import useWeather from '../../../hooks/useWeather';
 import EmotionAi from './EmotionAi';
-import Lock from '../../molecules/edit/Lock'
+import Lock from '../../molecules/Edit/Lock'
 import SelectedEmotionBox from './SelectedEmotionBox';
 import { useLocation } from 'react-router-dom';
 
