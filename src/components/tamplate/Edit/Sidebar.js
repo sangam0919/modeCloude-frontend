@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Profiles from '../../molecules/Edit/Profiles'
+import Profiles from '../../molecules/edit/Profiles'
 import Tab from '../../atoms/Edit/Tab'
+
 
 const SidebarWrap = styled.div`
     width: 250px;
