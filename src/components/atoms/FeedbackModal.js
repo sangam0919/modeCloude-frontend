@@ -83,7 +83,7 @@ const FeedbackModal = ({
     <ModalOverlay onClick={onClose}>
       <ModalBox type={type} onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
-        <p>{customMessage || desc}</p>
+        <p>{typeof customMessage === 'string' ? customMessage : desc}</p>
         {showButton && (
           <ButtonGroup>
             {showCancelButton && (
