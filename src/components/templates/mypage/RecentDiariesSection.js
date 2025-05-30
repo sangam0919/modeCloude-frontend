@@ -25,6 +25,7 @@ const RecentDiariesSection = ({ isMyPage, targetUid }) => {
       title={isMyPage ? '내 일기' : '공개된 일기'}
       diaries={diariesToRender}
       viewMoreText="모든 일기 보기"
+      viewMoreTo="/list"
     />
   );
 };
