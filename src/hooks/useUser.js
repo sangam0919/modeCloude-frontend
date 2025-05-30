@@ -1,7 +1,7 @@
 // hooks/useUser.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import {API_URL} from '../constants/api'
 const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ const useUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/login/user", {
+        const res = await axios.get(`${API_URL}/login/user`, {
           withCredentials: true,
         });
         setUser(res.data);
