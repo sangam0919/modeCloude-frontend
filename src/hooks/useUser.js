@@ -14,7 +14,7 @@ const useUser = () => {
 
     if (token) {
       // 토큰을 쿠키로 저장 (Secure, SameSite 설정도 가능)
-      document.cookie = `access_token=${token}; path=/; max-age=86400; Secure; SameSite=Lax`;
+      document.cookie = `token=${token}; path=/; max-age=86400; Secure; SameSite=Lax`;
 
       // 홈 등으로 리다이렉트
       navigate("/main");
