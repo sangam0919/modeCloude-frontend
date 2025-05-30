@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import EmotionIcon from '../../atoms/EmotionIcon'; // emoji 렌더링용
-import useEmotion from '../../../hooks/useEmotion'; // 전체 감정 리스트
+import EmotionIcon from '../../atoms/EmotionIcon'; 
+import useEmotion from '../../../hooks/useEmotion';
 
 const Box = styled.div`
   background: white;

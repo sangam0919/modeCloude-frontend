@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import WriteTitle from '../../molecules/write/WriteTitle'
-import { GradientBtn, OutlineBtn } from '../../atoms/RoundButton'  // ✅ 이렇게 중괄호로!
+import { GradientBtn, OutlineBtn } from '../../atoms/RoundButton' 
 
 const Wrap = styled.div`
   display: flex;

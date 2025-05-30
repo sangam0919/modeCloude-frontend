@@ -20,10 +20,6 @@ export default function Sidebar({ setSelectedEmotion, setAiEmotion,isPublic, set
   console.log('Sidebar에 전달된 isPublic:', isPublic);
   return (
     <Aside>
-     {/* {isWritePage && <SelectedEmotionBox />} */}
-      {/* mood={mood} emoji={emoji} label={label} */}
-      {/* <EmotionAi /> */}
-      
       {isWritePage && (
         <SelectedEmotionBox setSelectedEmotion={setSelectedEmotion} />
       )}

@@ -9,7 +9,7 @@ import { saveEmotionOnly } from '../../../redux/actions/diary';
 import useDiaryStatus from '../../../hooks/useDiaryStatus';
 import FeedbackModal from '../../atoms/FeedbackModal';
 import { useState } from 'react';
-import Test  from '../../pages/Test'
+import GrowingClouds  from '../../pages/GrowingClouds'
 
 const Section = styled.section`
   background: white;
@@ -34,11 +34,12 @@ const Divider = styled.hr`
   border-top: 1px dashed #e0e0e0;
 `;
 
-export default function EmotionDiarySection({ user, selectedEmotion, aiEmotion }) {
+export default function EmotionDiarySection({ user, selectedEmotion, aiEmotion, diary }) {
   const navigate = useNavigate();
   const { emotions, selected, setSelected } = useEmotion();
   const selObj = emotions.find((e) => e.id === selected);
   const dispatch = useDispatch();
+  
   const { isDone, refetchStatus } = useDiaryStatus();
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -52,12 +53,10 @@ export default function EmotionDiarySection({ user, selectedEmotion, aiEmotion }
     return (
       <Section2>
         <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>☁️ 당신의 구름 갤러리</h2>
-        <Test />
+        <GrowingClouds />
         <p style={{ textAlign: 'center', marginTop: '10px', color: '#666' }}>
             일기를 쓰면 구름 안의 추억이 자라나요 🌱
         </p>
-        {/* <h3 className="section-title">오늘은 이미 감정 또는 일기를 작성하셨어요 😊</h3>
-        <p style={{ textAlign: 'center', color: '#888' }}>내일 다시 이용해 주세요.</p> */}
       </Section2>
     );
   }
@@ -141,30 +140,27 @@ export default function EmotionDiarySection({ user, selectedEmotion, aiEmotion }
         )}
       </Section>
 
-      {/* 확인 모달 */}
       {confirmModalOpen && (
-        <FeedbackModal
-          type="check"
-          customMessage={{
-            title: '정말로 감정만 기록할까요?',
-            desc: '일기를 작성하지 않고 감정만 기록됩니다.',
-          }}
-          showButton
-          buttonText="기록하기"
-          buttonColor="#b881c2"
-          showCancelButton
-          cancelText="돌아가기"
-          onConfirm={doSaveEmotion}
-          onCancel={() => setConfirmModalOpen(false)}
-        />
+     <FeedbackModal
+     type="check"
+     title="정말로 감정만 기록할까요?"
+     desc="일기를 작성하지 않고 감정만 기록됩니다."
+     showButton
+     buttonText="기록하기"
+     buttonColor="#b881c2"
+     showCancelButton
+     cancelText="돌아가기"
+     onConfirm={doSaveEmotion}
+     onCancel={() => setConfirmModalOpen(false)}
+   />
       )}
 
-      {/* 피드백 모달 */}
       {feedbackModal.isOpen && (
         <FeedbackModal
-          type={feedbackModal.type}
-          customMessage={feedbackModal.message}
-          onClose={() => setFeedbackModal({ ...feedbackModal, isOpen: false })}
+        type={feedbackModal.type}
+        title={feedbackModal.message.title}  
+        desc={feedbackModal.message.desc}
+        onClose={() => setFeedbackModal({ ...feedbackModal, isOpen: false })}
         />
       )}
     </>

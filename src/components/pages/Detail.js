@@ -23,7 +23,8 @@ const Detail = () => {
   const { id } = useParams();                       
   const dispatch = useDispatch();
   const diary = useSelector((state) => state.diary.detail);  
-  const user =useUser();
+  const { user } = useUser();
+  
   useEffect(() => {
     dispatch(fetchDiaryDetail(id));                  
   }, [dispatch, id]);
@@ -31,13 +32,14 @@ const Detail = () => {
   useEffect(() => {
     console.log('diary:', diary);
     console.log('diary.comments:', diary?.comments);
-  }, [diary]);
+    console.log('useUser 내부 user:', user);
+  }, [diary, user]);
 
   if (!diary) return <div>로딩 중...</div>;
 
   const leftColumn = (
     <>
-      <BoardDetail diary={diary} />
+      <BoardDetail diary={diary} user={user} />
       <CommentSection 
       comments={diary.comments || []}
       diaryId={diary.id} 

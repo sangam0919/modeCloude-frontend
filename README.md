@@ -5,5 +5,5 @@ npm i react-router-dom date-fns axios react-dom styled-compnents
 
 npm i @toast-ui/react-editor @toast-ui/editor --legacy-peer-deps
 
-npm i redux react-redux
+npm i redux react-redux npm i react-icons
 ```

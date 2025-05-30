@@ -14,10 +14,18 @@ const Box = styled.div`
   }
 `;
 
-const EmotionInsightBox = () => (
-  <Box>
-    💡 이번 주 가장 많이 느낀 감정은 <span className="highlight">행복 😊</span>이에요!
-  </Box>
-);
+const EmotionInsightBox = ({ emotion }) => {
+  if (!emotion) return null;
+
+  return (
+    <Box>
+      💡 이번 주 가장 많이 느낀 감정은{' '}
+      <span className="highlight">
+        {emotion.label} {emotion.emoji}
+      </span>{' '}
+      예요!
+    </Box>
+  );
+};
 
 export default EmotionInsightBox;

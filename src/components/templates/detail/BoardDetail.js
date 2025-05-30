@@ -6,6 +6,8 @@ import CommentSection from './CommentSection';
 import { parseMarkdownWithFallback } from '../../../utills/parseMarkdown.js';
 import useEmotion from '../../../hooks/useEmotion';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteDiaryActions } from '../../../redux/actions/diary';
 
 const Wrap = styled.div`
   background: white;
@@ -45,7 +47,7 @@ const DiaryMeta = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   color: #333;
   font-weight: 600;
   margin-bottom: 20px;
@@ -62,6 +64,13 @@ const DairyText = styled.div`
     max-width: 100%;
     border-radius: 10px;
   }
+`;
+
+const EmotionRow = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 const DairyTagAll = styled.div`
@@ -96,9 +105,11 @@ const Comment = styled.div`
   font-size: 0.9rem;
 `;
 
-const BoardDetail = ({ diary }) => {
+const BoardDetail = ({ diary, user }) => {
   const { emotions } = useEmotion();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { deleteStatus, deleteError } = useSelector((state) => state.diary);
 
   useEffect(() => {
     if (diary) {
@@ -109,11 +120,30 @@ const BoardDetail = ({ diary }) => {
     }
   }, [diary, emotions]);
 
+  useEffect(() => {
+    if (deleteStatus === 'success') {
+      alert('삭제가 완료되었습니다.');
+      navigate('/main');
+    }
+    if (deleteStatus === 'fail') {
+      alert(`삭제에 실패했습니다: ${deleteError}`);
+    }
+  }, [deleteStatus]);
+
   const handleEdit = () => {
     navigate(`/edit/${diary.id}`, {
-      state: { diary },  // diary 객체를 같이 보냄
+      state: { diary },  
     });
   };
+
+  const handleDelete = async () => {
+  const confirmDelete = window.confirm('정말 이 일기를 삭제하시겠습니까?');
+  if (!confirmDelete) return;
+
+  await dispatch(deleteDiaryActions(diary.id));
+
+  navigate('/main');
+};
 
   if (!diary) return <div>로딩 중...</div>;
 
@@ -129,28 +159,31 @@ const BoardDetail = ({ diary }) => {
 
   
   const userEmotion = emotions.find((e) => e.id === emotionLog.userEmotion);
-  const aiEmotion = emotions.find((e) => e.id === emotionLog.selectEmotion);
+  const aiEmotion = emotions.find((e) => String(e.id) === String(emotionLog.selectEmotion));
 
   return (
     <Wrap>
+      <EmotionRow >
       {/* 내가 선택한 감정 */}
       {userEmotion && (
-        <EmotionTag emoji={userEmotion.emoji} label={`내 선택: ${userEmotion.name}`} color={userEmotion.color} />
+        <EmotionTag emoji={userEmotion.emoji} label={`${userEmotion.name}`} color={userEmotion.color} />
       )}
 
       {/* AI 감정 */}
       {aiEmotion && (
-      <EmotionTag
-        label={`AI 감정: ${aiEmotion.name}`}
+        <EmotionTag
+        label={`${aiEmotion.name}`}
         emoji={aiEmotion.emoji}
         color={aiEmotion.color}
-      />
-    )}
+        />
+      )}
+      </EmotionRow>
+      {String(user?.uid) === String(diary.user_id) && (
       <Btn>
         <DetailBtn icon="✏️" title="수정" onClick={handleEdit} />
-        <DetailBtn icon="🗑️" title="삭제" />
+        <DetailBtn icon="🗑️" title="삭제" onClick={handleDelete} />
       </Btn>
-
+    )}
       <DiaryMeta>
         <StyledDate>{new Date(createdAt).toLocaleDateString()}</StyledDate>
         <Public>{is_public ? '🌎 공개' : '🔒 비공개'}</Public>

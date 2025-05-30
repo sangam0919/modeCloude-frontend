@@ -13,23 +13,6 @@ const ModalWrap = styled.div`
   align-items: center;
   z-index: 100;
 `;
-
-// const ModalContent = styled.div`
-//   background: white;
-//   padding: 2rem;
-//   border-radius: 10px;
-//   width: 400px;
-//   position: relative;
-
-//   .information {
-//     font-family: 'Gmarket Sans', 'Noto Sans KR', sans-serif;
-//     color: #333;
-//     font-size: 0.9rem;
-//     text-align: center;
-//     margin-bottom: 15px;
-//    }
-// `;
-
 const ModalContent = styled.div`
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);

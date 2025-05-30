@@ -1,4 +1,3 @@
-// src/hooks/useWrite.js
 import { saveDiary } from '../api/write';
 
 const useWrite = () => {
@@ -13,7 +12,7 @@ const useWrite = () => {
       diary_img,
       is_public: is_public ? 1 : 0,
     };
-    console.log("📦 payload 보내기 전 내용 확인:", payload); // 🔥 여기!
+    console.log("payload 보내기 전 내용 확인:", payload); 
     const result = await saveDiary(payload);
     return result;
   };

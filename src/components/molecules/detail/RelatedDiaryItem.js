@@ -35,9 +35,9 @@ const Date = styled.div`
   color: #999;
 `;
 
-const RelatedDiaryItem = ({ emoji, title, date }) => {
+const RelatedDiaryItem = ({ emoji, title, date, onClick }) => {
   return (
-    <Item>
+    <Item onClick={onClick}>
       <Circle size={40} variant="fill">{emoji}</Circle>
       <Content>
         <Title>{title}</Title>

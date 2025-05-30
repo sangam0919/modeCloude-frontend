@@ -206,7 +206,7 @@ const Write = () => {
         {modal.isOpen && (
           <FeedbackModal
             type={modal.type}
-            customMessage={modal.message}
+            customMessage={modal.message.desc}
             showButton={true}
             buttonText="확인"
             buttonColor="#b881c2"

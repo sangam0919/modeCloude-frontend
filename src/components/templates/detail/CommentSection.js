@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DetailBtn from '../../molecules/detail/DetailBtn';
-import axios from 'axios';
-import { createComment } from '../../../api/diary'; 
+import FeedbackModal from '../../atoms/FeedbackModal'; 
+import { createComment } from '../../../api/diary';
 import useUser from '../../../hooks/useUser';
 
-// 스타일 생략 없이 그대로
+// 스타일 정의
 const Section = styled.div`
   background: white;
   border-radius: 15px;
@@ -138,29 +138,28 @@ const Action = styled.span`
 export default function CommentSection({ diaryId, comments = [] }) {
   const [localComments, setLocalComments] = useState(comments);
   const [inputValue, setInputValue] = useState('');
-  const user = useUser();   
-  console.log('user:', user);
-  console.log('user id:', user?.id);
- 
+  const [showModal, setShowModal] = useState(false); 
+  const user = useUser();
+
   const handleSubmit = async () => {
     if (!inputValue.trim()) return;
-  
+
     const data = {
       diary_id: diaryId,
       user_id: user?.user?.uid,
       content: inputValue
     };
-    console.log(' 댓글 전송 데이터:', data);
+
     try {
-      const res = await createComment(data); // POST 요청
+      const res = await createComment(data);
       if (res.success) {
         setLocalComments((prev) => [...prev, res.comment]);
         setInputValue('');
-        alert('댓글 작성 완료 ')
+        setShowModal(true); 
       }
     } catch (err) {
       console.error('댓글 등록 실패:', err);
-      alert('실패')
+      alert('실패');
     }
   };
 
@@ -172,7 +171,6 @@ export default function CommentSection({ diaryId, comments = [] }) {
 
       <InputArea>
         {user?.user?.profile ? (
-          
           <AvatarImg src={user.user.profile} alt="프로필 이미지" />
         ) : (
           <Avatar />
@@ -200,10 +198,10 @@ export default function CommentSection({ diaryId, comments = [] }) {
       <CommentList>
         {localComments.map((comment) => (
           <CommentItem key={comment.id}>
-             {comment.writer?.profile_image ? (
-          <AvatarImg src={comment.writer.profile_image} alt="profile" />
+            {comment.writer?.profile_image ? (
+              <AvatarImg src={comment.writer.profile_image} alt="profile" />
             ) : (
-              <Avatar /> 
+              <Avatar />
             )}
             <Content>
               <CommentHeader>
@@ -215,6 +213,13 @@ export default function CommentSection({ diaryId, comments = [] }) {
           </CommentItem>
         ))}
       </CommentList>
+
+      {showModal && (
+        <FeedbackModal
+          message="댓글이 작성되었습니다!"
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </Section>
   );
 }

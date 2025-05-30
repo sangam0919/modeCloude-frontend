@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { OutlineBtn } from '../atoms/RoundButton';
+import { Link } from 'react-router-dom';
 
 const Footer = styled.div`
   text-align: center;
@@ -20,14 +21,24 @@ const ButtonGroup = styled.div`
   gap: 20px;
   margin-top: 15px;
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`
+
 
 const FooterActions = () => (
   <Footer>
     <Quote>"오늘 하루의 감정이 내일의 행복을 만듭니다."</Quote>
     <ButtonGroup>
-      <OutlineBtn>일기 쓰기</OutlineBtn>
-      <OutlineBtn>친구 찾기</OutlineBtn>
-      <OutlineBtn>설정</OutlineBtn>
+      <StyledLink to={'/list'}>
+        <OutlineBtn>일기 보기</OutlineBtn>
+        </StyledLink>
+      {/* <OutlineBtn><StyledLink></OutlineBtn> */}
+      <StyledLink to={'/edit'}>
+      <OutlineBtn>
+        설정
+      </OutlineBtn>
+      </StyledLink>
     </ButtonGroup>
   </Footer>
 );

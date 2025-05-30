@@ -31,7 +31,7 @@ export default function StreakWidget({
     .map(d => parseISO(d))
     .filter(d => !isNaN(d)); // 유효한 날짜만
 
-  const thisWeekStart = startOfWeek(today, { weekStartsOn: 1 }); // 월요일 기준
+  const thisWeekStart = startOfWeek(today, { weekStartsOn: 1 }); 
   const thisWeekDays = Array.from({ length: 7 }).map((_, i) => {
     const date = addDays(thisWeekStart, i);
     const found = diaryDateObjects.find(d => d.toDateString() === date.toDateString());

@@ -1,9 +1,8 @@
 import React from 'react'
 import BackBtn from '../../molecules/detail/BackBtn'
-import { Link } from 'react-router-dom'
-import { sample } from '../../../hooks/simpleData'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
+import { useSelector } from 'react-redux'
 const Wrap = styled.div`
     display: flex;
     align-items: center;
@@ -30,21 +29,26 @@ const Title = styled.span`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin-left: 5px;
 `
 
 
-
-
 const DiaryNav = () => {
-    const title = sample[1].title;
+  const diary = useSelector((state) => state.diary.detail);
+  const title = diary?.title ?? ''; 
+  const navigate = useNavigate();
+
+  const handlerBack = () => {
+    navigate('/main')
+  }
 
   return (
     <Wrap>
-        <BackBtn />
-        <StyledLink to='#'>  내 일기</StyledLink>
-        <Title>/  {title}</Title>
+      <BackBtn onClick={handlerBack}/>
+      <StyledLink to={'/list'}>내 일기 /</StyledLink>
+      {title && <Title>{title}</Title>}
     </Wrap>
-  )
+  );
 }
 
 export default DiaryNav

@@ -15,24 +15,6 @@ const KakaoIcon = styled.div`
   img {
     margin-left: 2.4vh;
   }
-  /* background-image: url(${props => props.$icon});
-  color: #3c1e1e;
-  font-weight: bold;
-  font-size: 0.95rem;
-  width: 100%;
-  padding: 0.9rem 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  img {
-    width: 20px;
-    height: 20px;
-  } */
 `;
 
 const KakaoLogin = () => {

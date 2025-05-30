@@ -27,61 +27,7 @@ export const saveDiary = async (data) => {
   return res.data;
 };
 
-
-// ai 매핑 버전 
-// export const analyzeEmotion = async (content, emotionList) => {
-//   try {
-//     const response = await axios.post(`${API_URL}/write/analyze`, { content });
-//     const result = response.data.emotion?.trim();
-
-//     const aiEmotionMap = {
-//       '기쁨': 'happy',
-//       '행복함': 'happy',
-//       '즐거움': 'happy',
-//       '신남': 'excited',
-//       '설렘': 'excited',
-//       '감사함': 'grateful',
-//       '감동': 'grateful',
-//       '불안함': 'anxious',
-//       '걱정': 'anxious',
-//       '우울함': 'sad',
-//       '슬픔': 'sad',
-//       '외로움': 'sad',
-//       '분노': 'angry',
-//       '짜증': 'angry',
-//       '지침': 'tired',
-//       '무기력': 'tired',
-//       '피곤함': 'tired',
-//       '혼란스러움': 'confused',
-//       '혼란': 'confused',
-//       '지루함': 'tired',
-//       '차분함': 'calm',
-//       '평온함': 'calm',
-//       '당황' : 'confused'
-//     };
-
-//     emotionList.forEach(({ name, id }) => {
-//       aiEmotionMap[name.trim()] = id;
-//     });
-
-//     // console.log('[디버깅] AI 감정 분석 결과:', result);
-//     // console.log('[디버깅] 자동 생성된 매핑:', aiEmotionMap);
-
-//     const mapped = aiEmotionMap[result];
-//     if (!mapped) {
-//       console.warn(`⚠️ '${result}' 감정은 DB에 매핑된 값이 없습니다.`);
-//       return null;
-//     }
-
-//     return mapped;
-
-//   } catch (error) {
-//     console.error('감정 분석 실패:', error);
-//     return null;
-//   }
-// };
-
-// 이건 그냥 무슨 AI한테 넣어서 하는버전
+  // Open Ai 감정 처리 
 export const analyzeEmotion = async (content) => {
   try {
     const response = await axios.post(`${API_URL}/write/analyze`, { content });
@@ -90,7 +36,7 @@ export const analyzeEmotion = async (content) => {
     console.log('[디버깅] AI 감정 분석 결과:', result);
      
     if (!result) {
-      console.warn('⚠️ 감정 분석 결과가 비어 있습니다.');
+      console.warn('감정 분석 결과가 비어 있습니다.');
       return null;
     }
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import RelatedDiaryItem from '../../molecules/detail/RelatedDiaryItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFollowerDiary } from '../../../redux/actions/diary';
-
+import { useNavigate } from 'react-router-dom';
 const Widget = styled.div`
   background: white;
   border-radius: 15px;
@@ -30,27 +30,37 @@ const getRandomItems = (arr, count) => {
 };
 
 const getRandomMood = (diaries) => {
-  const moods = [...new Set(diaries.map(d => d.emotion?.id?.toLowerCase()))];
-  return moods[Math.floor(Math.random() * moods.length)];
+  const moods = diaries.map(d => d.emotion?.id?.toLowerCase()).filter(Boolean);
+  const unique = [...new Set(moods)];
+  const random = unique[Math.floor(Math.random() * unique.length)];
+  return random;
 };
 
 const RelatedDiariesWidget = ({ currentMood }) => {
   const dispatch = useDispatch();
-  const { followedDiaries = [], loading } = useSelector((state) => state.diary);
+  const navigate = useNavigate();
+  const { followerDiaries = [], loading } = useSelector((state) => state.diary); 
 
   useEffect(() => {
     dispatch(fetchFollowerDiary());
   }, [dispatch]);
 
-  if (loading) return <div>불러오는 중...</div>;
-  if (!followedDiaries || followedDiaries.length === 0) return null;
 
-  const moodToUse = currentMood?.toLowerCase() || getRandomMood(followedDiaries);
-  const related = followedDiaries.filter(
+  if (loading) return <div>불러오는 중...</div>;
+  if (!followerDiaries || followerDiaries.length === 0) {
+    console.log('followerDiaries가 비어 있음');
+    return null;
+  }
+
+  const moodToUse = currentMood?.toLowerCase() || getRandomMood(followerDiaries);
+
+
+  const related = followerDiaries.filter(
     (d) => d.emotion?.id?.toLowerCase() === moodToUse
   );
 
   const selected = getRandomItems(related, 3);
+
   if (selected.length === 0) return null;
 
   return (
@@ -63,6 +73,7 @@ const RelatedDiariesWidget = ({ currentMood }) => {
             emoji={item.emotion?.emoji || '🙂'} 
             title={item.title}
             date={item.createdAt?.slice(0, 10)}
+            onClick={() => navigate(`/detail/${item.id}`)}  
           />
         ))}
       </List>

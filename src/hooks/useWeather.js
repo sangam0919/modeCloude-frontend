@@ -23,7 +23,7 @@ const useWeather = (location = 'Seoul') => {
     const fetchWeather = async () => {
       try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric&lang=kr`;
-        console.log('🌍 요청 URL:', url);
+        console.log('요청 URL:', url);
 
         const res = await axios.get(url);
         const data = res.data;
@@ -36,14 +36,14 @@ const useWeather = (location = 'Seoul') => {
           main: data.weather[0].main
         });
       } catch (err) {
-        console.error('❌ 날씨 API 에러:', err.response?.status, err.message);
+        console.error('날씨 API 에러:', err.response?.status, err.message);
       }
     };
 
     if (API_KEY) {
       fetchWeather();
     } else {
-      console.error('❗ API 키가 존재하지 않습니다. .env 파일을 확인하세요.');
+      console.error('API 키가 존재하지 않습니다. .env 파일을 확인하세요.');
     }
   }, [location, API_KEY]);
 

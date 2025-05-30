@@ -10,6 +10,7 @@ const Grid = styled.div`
   grid-template-columns: repeat(7, 32px);
   gap: 8px;
   justify-content: center;
+  justify-items: center
 `;
 
 export default function MiniCalendar({ baseDate, diaryDates = [], onPrev, onNext }) {

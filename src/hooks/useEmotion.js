@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MainEmotion } from "../api/emtion"; // 이 경로는 그대로 두고
+import { MainEmotion } from "../api/emtion"; 
 
 const useEmotion = () => {
   const [selected, setSelected] = useState(null);
@@ -22,7 +22,7 @@ const useEmotion = () => {
     if (match) {
       setSelected(match.id);
     } else {
-      console.warn(`❗ 감정 '${name}'을 emotions에서 찾을 수 없습니다.`);
+      console.warn(`감정 '${name}'을 emotions에서 찾을 수 없습니다.`);
     }
   };
 

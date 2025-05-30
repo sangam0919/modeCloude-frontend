@@ -7,7 +7,7 @@ const useDiaryStatus = () => {
 
   const fetchStatus = useCallback(async () => {
     try {
-      const data = await checkTodayWritten();
+      const data = await checkTodayWritten({});
       setIsDone(data.hasWritten);
     } catch (err) {
       console.error('오늘 작성 여부 확인 실패:', err);

@@ -28,7 +28,7 @@ const ModalBox = styled.div`
     color: ${({ type }) =>
       type === 'success' ? '#4CAF50' :
       type === 'error' ? '#F44336' :
-      '#2196F3'};
+      '#333'};
   }
 
   p {
@@ -63,8 +63,8 @@ const FeedbackModal = ({
   customMessage = null,
 }) => {
   const getMessage = () => {
-    if (customMessage) return customMessage;
-
+    if (customMessage && typeof customMessage === 'object') return customMessage;
+  
     switch (type) {
       case 'success':
         return { title: '성공!', desc: '글쓰기가 완료되었습니다.' };
@@ -83,7 +83,7 @@ const FeedbackModal = ({
     <ModalOverlay onClick={onClose}>
       <ModalBox type={type} onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
-        <p>{desc}</p>
+        <p>{customMessage || desc}</p>
         {showButton && (
           <ButtonGroup>
             {showCancelButton && (

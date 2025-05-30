@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, {  useState } from 'react';
+import styled from 'styled-components';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css'; 
 import { GradientBtn } from '../../atoms/RoundButton';
@@ -71,9 +71,7 @@ const DiaryEditor = ({ title, setTitle, imageUrl, setImageUrl, editorRef, setAiE
       return;
     }
 
-    // const emotion = await analyzeEmotion(markdown, emotions);
     const emotionLabel = await analyzeEmotion(markdown);
-    // const found = emotions.find((e) => e.id === emotion);
     const found = emotions.find((e) => e.name === emotionLabel);
 
     if (found) {
@@ -148,7 +146,7 @@ const DiaryEditor = ({ title, setTitle, imageUrl, setImageUrl, editorRef, setAiE
       {modal.isOpen && (
         <FeedbackModal
           type={modal.type}
-          customMessage={modal.message}
+          customMessage={modal.message.desc}
           showButton={true}
           buttonText="확인"
           buttonColor="#b881c2"

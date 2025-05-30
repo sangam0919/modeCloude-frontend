@@ -17,10 +17,15 @@ const Item = styled.div`
     margin-right: 6px;
     color: #666;
   }
+
+  &.highlight {
+    background-color: #fffdf2;
+    font-weight: bold;
+  }
 `;
 
-const EmotionStatItem = ({ label, count, color }) => (
-  <Item>
+const EmotionStatItem = ({ label, count, color, isMostFrequent }) => (
+  <Item className={isMostFrequent ? 'highlight' : ''}>
     <EmotionDot color={color} />
     <span>{label}</span>
     <span>{count}</span>

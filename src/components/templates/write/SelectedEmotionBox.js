@@ -41,7 +41,6 @@ export default function SelectedEmotionBox({ setSelectedEmotion }) {
     const emoji = params.get('emoji');
     const label = params.get('label');
 
-    console.log(' 쿼리스트링 확인:', { mood, emoji, label });
 
     if (mood && emoji && label) {
       const emotionObj = { mood, emoji, label };

@@ -1,3 +1,5 @@
+// src/pages/Main.jsx
+
 import React from 'react';
 import EmotionDiarySection from '../templates/main/EmotionDiarySection';
 import RecentDiariesSection from '../templates/main/RecentDiariesSection';
@@ -15,16 +17,18 @@ import { useLocation } from 'react-router-dom';
 const Wrap = styled.div`
   min-height: 100vh;
   padding-bottom: 50px;
-`
+`;
 
 const Main = () => {
-  const user = useUser();
+  const { user } = useUser(); 
   const location = useLocation();
   const refetchKey = new URLSearchParams(location.search).get('refetch') || 'default';
 
+  if (!user) return null; 
+
   const leftColumn = (
     <>
-     <EmotionDiarySection key={refetchKey} user={user} />
+      <EmotionDiarySection key={refetchKey} user={user} />
       <RecentDiariesSection />
       <OtherDiariesSection />
     </>
@@ -32,12 +36,15 @@ const Main = () => {
 
   return (
     <Wrap>
-    <Container>
-      <Header />
-      <MainGreetingSection />
-      <LayoutTwoCols left={leftColumn} right={<Sidebar />} />
-      <FooterActions />
-    </Container>
+      <Container>
+        <Header />
+        <MainGreetingSection />
+        <LayoutTwoCols
+          left={leftColumn}
+          right={<Sidebar uid={user.uid} />} 
+        />
+        <FooterActions />
+      </Container>
     </Wrap>
   );
 };

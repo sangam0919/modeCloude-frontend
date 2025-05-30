@@ -14,20 +14,31 @@ import {
   RESET_UPDATE_STATUS, 
   FOLLOWER_DIARY_REQUEST,
   FOLLOWER_DIARY_SUCCESS,
-  FOLLOWER_DIARY_FAILURE
+  FOLLOWER_DIARY_FAILURE,
+  DELETE_DIARY_REQUEST,
+  DELETE_DIARY_SUCCESS,
+  DELETE_DIARY_FAILURE,
+  FETCH_PUBLIC_DIARIES_REQUEST,
+  FETCH_PUBLIC_DIARIES_SUCCESS,
+  FETCH_PUBLIC_DIARIES_FAILURE
 } from '../types/diary';
 
 const initialState = {
   loading: false,
   myDiaries: [],
   followerDiaries: [],
+  publicDiaries: [],
   detail: null,
   error: null,
   emotionSaveStatus: 'idle',
   emotionError: null,
   updateStatus: 'idle',
   updateError: null,
+  deleteStatus: 'idle',  
+  deleteError: null
 };
+
+
 
 const diaryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -38,6 +49,22 @@ const diaryReducer = (state = initialState, action) => {
       return { ...state, loading: false, myDiaries: action.payload };
     case FETCH_DIARIES_FAILURE:
       return { ...state, loading: false, error: action.payload };
+
+    // 공개된 일기
+      case FETCH_PUBLIC_DIARIES_REQUEST:
+      return { ...state, loading: true, error: null };
+    case FETCH_PUBLIC_DIARIES_SUCCESS:
+      return { ...state, loading: false, publicDiaries: action.payload };
+    case FETCH_PUBLIC_DIARIES_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+
+      // 일기 삭제 
+      case DELETE_DIARY_REQUEST:
+        return { ...state, loading: true, deleteStatus: 'loading', deleteError: null };
+      case DELETE_DIARY_SUCCESS:
+        return { ...state, loading: false, deleteStatus: 'success',  myDiaries: state.myDiaries.filter(diary => diary.id !== action.payload),    };
+      case DELETE_DIARY_FAILURE:
+        return { ...state, loading: false, deleteStatus: 'fail', deleteError: action.payload };
 
     // 팔로우한 일기
       case FOLLOWER_DIARY_REQUEST:

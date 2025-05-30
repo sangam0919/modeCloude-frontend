@@ -61,7 +61,10 @@ const Edit = () => {
         },
         mode: 'save'
       });
-      setTimeout(() => navigate(`/detail/${diary.id}`), 1500);
+      setTimeout(() => 
+      dispatch(resetUpdateStatus()), 
+      navigate(`/detail/${diary.id}`, { replace: true })
+      , 1500);
     } else if (!modal.mode && updateStatus === 'failed') {
       setModal({
         isOpen: true,
@@ -120,7 +123,8 @@ const Edit = () => {
     const payload = {
       title,
       content,
-      emotion: aiEmotion.id,
+      selectEmotion: aiEmotion.id, 
+      userEmotion: diary?.emotionLog?.userEmotion || null,
       is_public: isPublic,
       diary_img: imageUrl
     };
@@ -162,7 +166,7 @@ const Edit = () => {
       {modal.isOpen && (
         <FeedbackModal
           type={modal.type}
-          customMessage={modal.message}
+          customMessage={modal.message.desc}
           showButton={true}
           buttonText="확인"
           buttonColor="#b881c2"

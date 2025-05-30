@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {  useState } from 'react';
 import styled from 'styled-components';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -69,8 +69,8 @@ const DiaryEdit = ({
 
   const handleImageUpload = async (blob, callback) => {
     try {
-      const url = await uploadImage(blob); // 서버 업로드 후 URL 반환
-      callback(url, '업로드 이미지'); // 마크다운에 삽입
+      const url = await uploadImage(blob); 
+      callback(url, '업로드 이미지');
     } catch (err) {
       console.error('이미지 업로드 실패:', err);
     }
@@ -91,7 +91,6 @@ const DiaryEdit = ({
       return;
     }
 
-    // const emotion = await analyzeEmotion(markdown, emotions);
     const emotionLabel = await analyzeEmotion(markdown);
     const found = emotions.find((e) => e.id === emotionLabel || e.name === emotionLabel);
 
@@ -154,7 +153,7 @@ const DiaryEdit = ({
       {modal.isOpen && (
         <FeedbackModal
           type={modal.type}
-          customMessage={modal.message}
+          customMessage={modal.message.desc}
           showButton={true}
           buttonText="확인"
           buttonColor="#b881c2"

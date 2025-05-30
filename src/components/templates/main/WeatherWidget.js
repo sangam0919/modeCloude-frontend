@@ -1,4 +1,3 @@
-// src/components/templates/WeatherWidget.jsx
 import styled from 'styled-components';
 import WeatherIcon from '../../molecules/main/WeatherIcon';
 import WeatherInfo from '../../molecules/main/WeatherInfo';

@@ -1,6 +1,5 @@
 import DiarySection from './DiarySection';
 import EmotionIcon from '../../atoms/EmotionIcon';
-import { others } from '../../../hooks/simpleData'
 import { useDispatch, useSelector} from "react-redux"
 import { subDays, subMonths, subYears, isAfter } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -11,12 +10,11 @@ export default function OthersDiariesSection(){
   const handleMore = () => console.log('남의 일기 더 보기 클릭');
   const renderEmotion = (emoji) => <EmotionIcon otehrs={emoji} />;
   const { followerDiaries = [], loading, error } = useSelector((state) => state.diary);
-  console.log("dkdkdkdkdkdkdkd", followerDiaries)
   const [filter, setFilter] = useState('all');
   const now = new Date();
   const dispatch = useDispatch();
   const extractDate = (dateStr) => {
-    return new Date(dateStr.slice(0, 10)); // "2025-05-01" 형식
+    return new Date(dateStr.slice(0, 10)); 
   };
 
     
@@ -42,9 +40,8 @@ export default function OthersDiariesSection(){
     <DiarySection
       title="남의 일기"
       diaries={filteredDiaries}
-      // renderEmotion={renderEmotion}
       viewMoreText="남의 일기 더 보기"
-      viewMoreTo="/others"  
+      viewMoreTo="/list"  
       onViewMore={handleMore}
   />
   );
