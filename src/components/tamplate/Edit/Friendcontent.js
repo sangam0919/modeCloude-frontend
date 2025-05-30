@@ -20,7 +20,10 @@ const FriendHead = styled.div`
   border-bottom: 1px solid #eee;
 `
 const Friendsdata = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
 `
 
 const Friendcontent = () => {
@@ -31,9 +34,9 @@ const Friendcontent = () => {
           <Text weight={"bold"} size={"1.2rem"}>팔로워</Text>
         </FriendHead>
         <Friendsdata>
-          <>더미데이터</>
-          <>더미데이터</>
-          <>더미데이터</>
+          <div>더미데이터</div>
+          <div>더미데이터</div>
+          <div>더미데이터</div>
         </Friendsdata>
       </Followwarp>
       <Followingwarp>
@@ -41,9 +44,9 @@ const Friendcontent = () => {
           <Text weight={"bold"} size={"1.2rem"}>팔로잉</Text>
         </FriendHead>
         <Friendsdata>
-        <>더미데이터</>
-        <>더미데이터</>
-        <>더미데이터</>
+          <>더미데이터</>
+          <>더미데이터</>
+          <>더미데이터</>
         </Friendsdata>
       </Followingwarp>
     </Profilesetup>

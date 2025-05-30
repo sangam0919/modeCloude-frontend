@@ -17,17 +17,12 @@ const SidebarWrap = styled.div`
         color: #b881c2;
         border-left: 3px solid #b881c2;
     }
-    & .tab-wrap.protect > div:nth-child(2){
+    & .tab-wrap.friend > div:nth-child(2){
         background-color : #f0f0f0;
         color: #b881c2;
         border-left: 3px solid #b881c2;
     }
-    & .tab-wrap.friend > div:nth-child(3){
-        background-color : #f0f0f0;
-        color: #b881c2;
-        border-left: 3px solid #b881c2;
-    }
-    & .tab-wrap.account > div:nth-child(4){
+    & .tab-wrap.account > div:nth-child(3){
         background-color : #f0f0f0;
         color: #b881c2;
         border-left: 3px solid #b881c2;
@@ -43,10 +38,6 @@ const Sidebar = ({onClick, selectTab}) => {
                 <Tab onClick={() =>  onClick("profile")}>
                     <span className='sidebar-icon'>👤</span>
                     프로필 정보
-                </Tab>
-                <Tab  onClick={() => {onClick("protect")}}>
-                    <span className='sidebar-icon'>🛡️</span>
-                    개인정보 보호
                 </Tab>
                 <Tab  onClick={() => {onClick("friend")}}>
                     <span className='sidebar-icon'>👥</span>

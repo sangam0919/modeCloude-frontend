@@ -5,15 +5,15 @@ const CardWrap = styled.div`
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: ${({height}) => height || ''};
 
 `
-const Card = ({ children }) => {
+const Card = ({ children, height }) => {
     return (
-        <CardWrap>{children}</CardWrap>
+        <CardWrap height={height}>{children}</CardWrap>
     )
 }
 

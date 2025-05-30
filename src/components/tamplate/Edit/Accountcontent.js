@@ -75,7 +75,7 @@ const Accountcontent = () => {
         <AccoutcontentwWrap>
           <div className='delete-warp'>
             <div className='delete-btn'>
-              <Button onClick={() => setActive(true)}>🗑️ 계정 삭제</Button>
+              <Button onClick={() => setActive(true)} background={"white"}>🗑️ 계정 삭제</Button>
             </div>
             <div>
               <Text weight={"bold"} size={"0.9rem"} color={"red"}>계정을 삭제할시 모든 데이터가 삭제됩니다.</Text>
@@ -88,7 +88,7 @@ const Accountcontent = () => {
               <Text color={"red"} size={"1.1rem"} weight={"bold"}>정말 삭제 하시겠습니까?</Text>
             </div>
             <div className='delete-popup-warp-btns'>
-              <Button onClick={()=> setActive(false)}>취소</Button>
+              <Button onClick={()=> setActive(false)} background={"white"}>취소</Button>
               <Button background={"#f44336"} color={""}>삭제</Button>
             </div>
           </div>

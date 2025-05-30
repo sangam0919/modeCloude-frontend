@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import EditHeader from '../tamplate/Edit/EditHeader'
 import Sidebar from '../tamplate/Edit/Sidebar'
 import Profilecontent from '../tamplate/Edit/Profilecontent'
-import Protectcontent from '../tamplate/Edit/Protectcontent'
 import Friendcontent from '../tamplate/Edit/Friendcontent'
 import Accountcontent from '../tamplate/Edit/Accountcontent'
 
@@ -33,7 +32,6 @@ const Edit = () => {
       <div className='settings-layout'>
         <Sidebar selectTab={selectTab} onClick={setSelectTab} />
         {selectTab === 'profile' && <Profilecontent />}
-        {selectTab === 'protect' && <Protectcontent />}
         {selectTab === 'friend' && <Friendcontent />}
         {selectTab === 'account' && <Accountcontent />}
       </div>

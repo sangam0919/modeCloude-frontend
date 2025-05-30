@@ -1,7 +1,10 @@
 import Mypage from "./components/pages/Mypage";
 import Edit from "./components/pages/Edit";
+import List from "./components/pages/List";
+import Statistics from "./components/pages/Statistics";
 import styled from 'styled-components';
 import { Routes, Route } from "react-router-dom";
+
 
 const AppWrapper = styled.div`
   min-height: 100vh;
@@ -14,6 +17,8 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Mypage />} />
         <Route path={"/edit"} element={<Edit/>}/>
+        <Route path={"/list"} element={<List/>}/>
+        <Route path={"/statistics"} element={<Statistics/>}/>
       </Routes>
 
     </AppWrapper>

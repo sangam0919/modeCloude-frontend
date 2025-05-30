@@ -1,5 +1,5 @@
 import React from 'react'
-import UserProfileLeft from '../molecules/Mypage/UserProfileLeft'
+import UserProfileLeft from '../../molecules/Mypage/UserProfileLeft'
 
 
 
