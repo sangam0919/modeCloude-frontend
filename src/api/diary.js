@@ -28,6 +28,7 @@ export const getfollowerDiaries = async (data) => {
   // 감정 저장 
   export const saveEmotionOnly = async (data) => {
     const res = await axios.post(`${API_URL}/main/emotionOnly`, data);
+    console.log('asdsadsadsadsadsadsadsadsadsad',data);
     return res.data;
   };
 

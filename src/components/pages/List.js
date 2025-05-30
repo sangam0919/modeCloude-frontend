@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../tamplate/Header';
+import Header from '../templates/Header';
 import styled from 'styled-components';
 import ListItem from '../molecules/List/Listitem';
 import Listheader from '../tamplate/List/Listheader';
