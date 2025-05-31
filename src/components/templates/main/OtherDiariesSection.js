@@ -43,6 +43,7 @@ export default function OthersDiariesSection(){
       viewMoreText="남의 일기 더 보기"
       viewMoreTo="/list"  
       onViewMore={handleMore}
+      showWriter={true}
   />
   );
 }

@@ -28,6 +28,7 @@ export default function DiaryGrid({ diaries }) {
             moodLabel={d.emotion?.name}
             visibility={d.isPublic ? '공개' : '비공개'}
             comments={d.commentCount}
+            showWriter={true}
           />
         );
       })}
