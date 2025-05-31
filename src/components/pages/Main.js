@@ -30,7 +30,7 @@ const Main = () => {
     <>
       <EmotionDiarySection key={refetchKey} user={user} />
       <RecentDiariesSection />
-      <OtherDiariesSection />
+      <OtherDiariesSection  />
     </>
   );
 

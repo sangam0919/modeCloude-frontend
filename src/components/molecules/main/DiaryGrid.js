@@ -29,6 +29,7 @@ export default function DiaryGrid({ diaries }) {
             visibility={d.isPublic ? '공개' : '비공개'}
             comments={d.commentCount}
             showWriter={true}
+            writer={d.writer}
           />
         );
       })}

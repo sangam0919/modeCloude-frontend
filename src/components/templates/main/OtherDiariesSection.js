@@ -21,7 +21,9 @@ export default function OthersDiariesSection(){
   useEffect(() => {
     dispatch(fetchFollowerDiary());
   }, [dispatch]);
-
+  useEffect(() => {
+    console.log('📦 followerDiaries[0]:', followerDiaries[0]);
+  }, [followerDiaries]);
       const filteredDiaries = Array.isArray(followerDiaries)
       ? followerDiaries.filter((diary) => {
           const diaryDate = extractDate(diary.createdAt);
@@ -34,7 +36,7 @@ export default function OthersDiariesSection(){
 
     if (loading) return <p>불러오는 중...</p>;
     if (error) return <p>에러: {error}</p>;
-
+   
       
   return (
     <DiarySection
