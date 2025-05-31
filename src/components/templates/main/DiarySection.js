@@ -29,11 +29,11 @@ const ViewMore = styled(Link)`
   }
 `;
 
-export default function DiarySection({ title, diaries, viewMoreText, onViewMore, viewMoreTo }) {
+export default function DiarySection({ title, diaries, viewMoreText, onViewMore, viewMoreTo, showWriter }) {
   return (
     <Section>
       <Title>{title}</Title>
-      <DiaryGrid diaries={diaries} />
+      <DiaryGrid diaries={diaries} showWriter={true} />
       {viewMoreText && (
         <ViewMore to={viewMoreTo || '#'}>
           {viewMoreText}
