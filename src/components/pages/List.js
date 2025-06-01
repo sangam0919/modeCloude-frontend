@@ -91,9 +91,13 @@ const RecordListPage = () => {
     }
   };
   // --- 페이지네이션 로직 끝 ---
-  const stripHtmlTags = (html) => {
-    if (!html) return '';
-    return html.replace(/<[^>]*>?/gm, '');
+  const stripHtmlTagsAndImages = (text) => {
+    if (!text) return '';
+    // 1. 마크다운 이미지 제거
+    let cleaned = text.replace(/!\[.*?\]\(.*?\)/g, '');
+    // 2. HTML 태그 제거
+    cleaned = cleaned.replace(/<[^>]*>?/gm, '');
+    return cleaned;
   };
 
   const dataQuery = (paramName, initValue, currentValue) => {
@@ -180,7 +184,7 @@ const RecordListPage = () => {
               <ListItem
                 key={diary.id}
                 title={diary.title}
-                description={stripHtmlTags(diary.content)}
+                description={stripHtmlTagsAndImages(diary.content)}
                 date={new Date(diary.createdAt).toLocaleDateString()} // 날짜 형식 변환
                 isPublic={diary.isPublic} // 아이콘 표시용
                 // "모두의 일기" (팔로우) 탭에서는 API가 author 정보를 제공해야 함
