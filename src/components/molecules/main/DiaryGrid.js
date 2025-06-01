@@ -16,7 +16,7 @@ export default function DiaryGrid({ diaries }) {
     <Grid>
       {diaries?.map((d) => {
         if (!d || !d.createdAt) return null;
-
+        console.log('sadadsdsasadasdasd', diaries)
         return (
           <DiaryCard
             key={d.id}
@@ -24,6 +24,7 @@ export default function DiaryGrid({ diaries }) {
             date={d.createdAt.slice(0, 10)}
             title={d.title}
             preview={d.content?.slice(0, 80) || ''}
+            
             moodColor={d.emotion?.color}
             moodLabel={d.emotion?.name}
             visibility={d.isPublic ? '공개' : '비공개'}
