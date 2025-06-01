@@ -91,6 +91,10 @@ const RecordListPage = () => {
     }
   };
   // --- 페이지네이션 로직 끝 ---
+  const stripHtmlTags = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>?/gm, '');
+  };
 
   const dataQuery = (paramName, initValue, currentValue) => {
     // 값이 있고, 초기값이나 "전체"가 아닐 때만 쿼리 파라미터 생성
@@ -176,7 +180,7 @@ const RecordListPage = () => {
               <ListItem
                 key={diary.id}
                 title={diary.title}
-                description={diary.content}
+                description={stripHtmlTags(diary.content)}
                 date={new Date(diary.createdAt).toLocaleDateString()} // 날짜 형식 변환
                 isPublic={diary.isPublic} // 아이콘 표시용
                 // "모두의 일기" (팔로우) 탭에서는 API가 author 정보를 제공해야 함
