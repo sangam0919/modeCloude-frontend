@@ -12,6 +12,7 @@ export const uploadImage = async (blob) => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
+    withCredentials: true
   });
   console.log('서버에서 받은 이미지 URL:', res.data.url);
   return res.data.url;
