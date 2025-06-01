@@ -69,7 +69,7 @@ const Statistics = () => {
     }
 
     const diarydataApi = async () => {
-        const { data } = await axios.get("http://127.0.0.1:4000/Main/emotionAll")
+        const { data } = await axios.get("https://devops1.store/Main/emotionAll")
         console.log(data)
         return data;
     }

@@ -24,6 +24,7 @@ export const saveDiary = async (data) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true, 
   });
   return res.data;
 };
