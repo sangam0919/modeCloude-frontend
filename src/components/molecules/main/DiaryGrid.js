@@ -53,7 +53,7 @@ export default function DiaryGrid({ diaries, showWriter }) {
   return (
     <Grid>
       {selectDiaries(diaries, showWriter)?.map((d, i) => {
-        if(i < 4) return null;
+        if(i > 3) return null;
         return d; 
       })}
     </Grid>
