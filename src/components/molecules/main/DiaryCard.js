@@ -105,11 +105,11 @@ export default function DiaryCard({
     if (!diary) return;
     navigate(`/detail/${String(diary.id).trim()}`);
   };
-
   const stripHtmlTagsAndImages = (text) => {
     if (!text) return '';
-    let cleaned = text.replace(/!\[.*?\]\(.*?\)/g, '');   
-    cleaned = cleaned.replace(/<[^>]*>?/gm, '');         
+    let cleaned = text.replace(/!\[.*?\]\([^\)]*?\)/gs, ''); // 이미지 제거
+    cleaned = cleaned.replace(/<[^>]*>?/gm, '');             // HTML 제거
+    cleaned = cleaned.replace(/\s+/g, ' ').trim();           // 연속 공백 제거
     return cleaned;
   };
 

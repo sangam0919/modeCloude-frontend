@@ -11,6 +11,14 @@ const Grid = styled.div`
   }
 `;
 
+const stripHtmlTagsAndImages = (text) => {
+  if (!text) return '';
+  let cleaned = text.replace(/!\[[^\]]*\]\([^\)]*\)/gs, '');
+  cleaned = cleaned.replace(/<[^>]*>/g, '');
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  return cleaned;
+};
+
 export default function DiaryGrid({ diaries }) {
   return (
     <Grid>
@@ -23,7 +31,7 @@ export default function DiaryGrid({ diaries }) {
             diary={d} 
             date={d.createdAt.slice(0, 10)}
             title={d.title}
-            preview={d.content?.slice(0, 80) || ''}
+            preview={stripHtmlTagsAndImages(d.content)?.slice(0, 80) || ''}
             
             moodColor={d.emotion?.color}
             moodLabel={d.emotion?.name}

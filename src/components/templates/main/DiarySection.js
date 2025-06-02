@@ -29,6 +29,8 @@ const ViewMore = styled(Link)`
   }
 `;
 
+
+
 export default function DiarySection({ title, diaries, viewMoreText, onViewMore, viewMoreTo, showWriter }) {
   return (
     <Section>
