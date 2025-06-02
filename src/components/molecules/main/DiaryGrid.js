@@ -21,18 +21,18 @@ const stripHtmlTagsAndImages = (text) => {
   return cleaned;
 };
 
-// 정제된 텍스트를 일정 길이로 자르고 너무 길면 ... 붙임
 const getPreviewText = (text, maxLength = 20) => {
   const cleaned = stripHtmlTagsAndImages(text);
   return cleaned.length > maxLength
     ? cleaned.slice(0, maxLength) + '...'
-    : cleaned;
+    : cleaned;  
 };
 
 export default function DiaryGrid({ diaries, showWriter }) {
   return (
     <Grid>
-      {diaries?.map((d) => {
+      {diaries?.map((d, i) => {
+        if(i < 4) return null;
         if (!d || !d.createdAt) return null;
         return (
           <DiaryCard
