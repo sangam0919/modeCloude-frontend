@@ -28,27 +28,33 @@ const getPreviewText = (text, maxLength = 20) => {
     : cleaned;  
 };
 
+const selectDiaries = (diaries, showWriter) => {
+  return diaries.map((d) => {
+    if (!d || !d.createdAt) return null;
+    return (
+      <DiaryCard
+        key={d.id}
+        diary={d}
+        date={d.createdAt.slice(0, 10)}
+        title={d.title}
+        preview={getPreviewText(d.content)}
+        moodColor={d.emotion?.color}
+        moodLabel={d.emotion?.name}
+        visibility={d.isPublic ? '공개' : '비공개'}
+        comments={d.commentCount}
+        showWriter={showWriter}
+        writer={d.writer}
+      />
+    );
+  })
+}
+
 export default function DiaryGrid({ diaries, showWriter }) {
   return (
     <Grid>
-      {diaries?.map((d, i) => {
+      {selectDiaries(diaries, showWriter)?.map((d, i) => {
         if(i < 4) return null;
-        if (!d || !d.createdAt) return null;
-        return (
-          <DiaryCard
-            key={d.id}
-            diary={d}
-            date={d.createdAt.slice(0, 10)}
-            title={d.title}
-            preview={getPreviewText(d.content)}
-            moodColor={d.emotion?.color}
-            moodLabel={d.emotion?.name}
-            visibility={d.isPublic ? '공개' : '비공개'}
-            comments={d.commentCount}
-            showWriter={showWriter}
-            writer={d.writer}
-          />
-        );
+        return d; 
       })}
     </Grid>
   );
