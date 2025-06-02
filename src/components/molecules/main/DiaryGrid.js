@@ -13,31 +13,39 @@ const Grid = styled.div`
 
 const stripHtmlTagsAndImages = (text) => {
   if (!text) return '';
-  let cleaned = text.replace(/!\[[^\]]*\]\([^\)]*\)/gs, '');
-  cleaned = cleaned.replace(/<[^>]*>/g, '');
-  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  let cleaned = text
+    .replace(/!\[[^\]]*\]\([^\)]*\)/gs, '')
+    .replace(/<[^>]*>/g, '')                
+    .replace(/\s+/g, ' ')                  
+    .trim();
   return cleaned;
 };
 
-export default function DiaryGrid({ diaries }) {
+// 정제된 텍스트를 일정 길이로 자르고 너무 길면 ... 붙임
+const getPreviewText = (text, maxLength = 20) => {
+  const cleaned = stripHtmlTagsAndImages(text);
+  return cleaned.length > maxLength
+    ? cleaned.slice(0, maxLength) + '...'
+    : cleaned;
+};
+
+export default function DiaryGrid({ diaries, showWriter }) {
   return (
     <Grid>
       {diaries?.map((d) => {
         if (!d || !d.createdAt) return null;
-        console.log('sadadsdsasadasdasd', diaries)
         return (
           <DiaryCard
             key={d.id}
-            diary={d} 
+            diary={d}
             date={d.createdAt.slice(0, 10)}
             title={d.title}
-            preview={stripHtmlTagsAndImages(d.content)?.slice(0, 80) || ''}
-            
+            preview={getPreviewText(d.content)}
             moodColor={d.emotion?.color}
             moodLabel={d.emotion?.name}
             visibility={d.isPublic ? '공개' : '비공개'}
             comments={d.commentCount}
-            showWriter={true}
+            showWriter={showWriter}
             writer={d.writer}
           />
         );

@@ -1,35 +1,31 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Profilesetup from '../../atoms/Edit/Profilesetup'; // 경로 확인
+import Profilesetup from '../../atoms/Edit/Profilesetup'; 
 import styled from 'styled-components';
-import Text from '../../atoms/Text'; // 경로 확인
+import Text from '../../atoms/Text'; 
 import axios from 'axios';
-import { API_URL } from '../../../constants/api'; // API_URL 경로가 현재 파일 위치 기준으로 맞는지 확인해주세요.
+import { API_URL } from '../../../constants/api'; 
 
-// Profilesetup 컴포넌트 또는 이를 감싸는 컨테이너에 적용될 스타일
-// 첫 번째 화면(프로필 정보)의 흰색 박스와 유사한 최소 높이를 갖도록 설정
 const StyledContentWrapper = styled.div`
-  min-height: 550px; /* ★★★ 전체 흰색 박스의 최소 높이 (첫 번째 화면 참고하여 조절) ★★★ */
-  background-color: #fff; // 필요하다면 배경색 지정
-  border-radius: 8px; // 필요하다면 둥근 모서리
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); // 필요하다면 그림자
+  min-height: 550px; 
+  background-color: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
   display: flex;
-  flex-direction: column; /* 내부 요소들이 세로로 쌓이도록 */
+  flex-direction: column; 
   width: 100%;
 `;
 
 const FollowListContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-grow: 1; /* StyledContentWrapper 내에서 남은 공간을 모두 차지하도록 */
-  /* height: 0; // flex-grow와 함께 사용할 때의 트릭. 또는 height: 100%; */
-  /* Profilesetup이 이미 적절한 높이를 제공한다면 이 부분은 단순 display:flex만으로도 충분할 수 있습니다. */
+  flex-grow: 1; 
 `;
 
 const FollowSection = styled.div`
   width: 50%;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column; /* 헤더와 스크롤 영역을 세로로 배치 */
+  flex-direction: column; 
 
   &:first-child {
     border-right: 3px solid #eee;
@@ -40,21 +36,19 @@ const FriendHead = styled.div`
   text-align: center;
   padding: 15px 0;
   border-bottom: 1px solid #eee;
-  background-color: white; /* 스크롤 시 내용이 가려지지 않도록 */
-  /* position: sticky; top: 0; z-index: 1; // 필요 시 헤더 고정 */
+  background-color: white; 
 `;
 
-// 이 영역이 "기본 크기"를 가지고, 내용이 넘치면 스크롤됩니다.
 const FriendsDataScrollable = styled.div`
-  height: 350px; /* ★★★ 팔로워/팔로잉 목록 각 칸의 "기본 높이" (조절 가능) ★★★ */
-  overflow-y: auto; /* 내용이 이 높이를 초과하면 세로 스크롤바 표시 */
-  display: flex; /* 내부 MessageText 중앙 정렬을 위해 */
-  flex-direction: column; /* 내부 요소가 세로로 쌓이도록 */
-  /* padding: 15px; // 패딩은 FriendsList 또는 MessageText에서 관리 */
+  height: 350px; 
+  overflow-y: auto; 
+  display: flex; 
+  flex-direction: column; 
+  
 `;
 
 const FriendsList = styled.div`
-  padding: 15px; /* 아이템 목록 주변에만 패딩 */
+  padding: 15px; 
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -66,7 +60,7 @@ const FriendItem = styled.div`
   justify-content: space-between;
   padding: 12px;
   border-radius: 8px;
-  background-color: #fff; // 또는 #fdfdfd
+  background-color: #fff; 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.2s ease-in-out;
 
@@ -170,7 +164,7 @@ const Friendcontent = () => {
 
   const handleRemoveFollower = (userIdToRemove) => {
     if (!window.confirm("정말로 이 팔로워를 삭제하시겠습니까? 이 작업은 상대방에게 알림이 가지 않으며, 상대방은 여전히 당신을 팔로우 시도할 수 있습니다.")) return;
-    alert(`팔로워 (ID: ${userIdToRemove}) 제거 기능은 백엔드 API 구현이 필요합니다.`);
+    alert(`팔로워 (ID: ${userIdToRemove}) 제거 기능은 아직 지원하지 않습니다.`);
 
   };
 
