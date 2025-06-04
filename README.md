@@ -29,6 +29,9 @@ npm i redux react-redux npm i react-icons
 
 #### 배운 점
 
+<img src='./gif/Honeycam 2025-06-04 13-18-43.gif'>
+<img src='./gif/Honeycam 2025-06-04 13-21-59.gif'>
+<img src='./gif/Honeycam 2025-06-04 13-25-54.gif'>
 
 ---
 
