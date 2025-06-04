@@ -63,6 +63,18 @@
 
 ---
 
+---
+### 기술 스택
+
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-764ABC?style=flat&logo=Redux&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=flat&logo=styled-components&logoColor=white)
+![Toast UI Editor](https://img.shields.io/badge/Toast_UI_Editor-0097E0?style=flat)
+---
+
 ### 📦 사용한 패키지 설치 명령어
 
 ```sh
