@@ -34,7 +34,7 @@ const FooterActions = () => (
         <OutlineBtn>일기 보기</OutlineBtn>
         </StyledLink>
       {/* <OutlineBtn><StyledLink></OutlineBtn> */}
-      <StyledLink to={'/edit'}>
+      <StyledLink to={'/setting'}>
       <OutlineBtn>
         설정
       </OutlineBtn>
