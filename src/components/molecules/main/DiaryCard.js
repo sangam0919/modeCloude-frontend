@@ -26,13 +26,16 @@ const Title = styled.h4`
 `;
 
 const Preview = styled.p`
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+ font-size: 0.9rem;
+color: #666;
+line-height: 1.4;
+display: -webkit-box;
+-webkit-line-clamp: 2;             
+-webkit-box-orient: vertical;
+overflow: hidden;
+max-width: 4000px;                  
+text-overflow: ellipsis;
+white-space: normal;
 `;
 
 const Footer = styled.div`
@@ -74,6 +77,16 @@ const WriterInfo = styled.div`
   }
 `;
 
+// const Content = styled.div`
+//      font-size: 0.9rem;
+//   color: #444;
+//   line-height: 1.4;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   max-width: 100%;
+// `;
+
 export default function DiaryCard({
   date,
   title,
@@ -92,6 +105,13 @@ export default function DiaryCard({
     if (!diary) return;
     navigate(`/detail/${String(diary.id).trim()}`);
   };
+  const stripHtmlTagsAndImages = (text) => {
+    if (!text) return '';
+    let cleaned = text.replace(/!\[.*?\]\([^\)]*?\)/gs, ''); // 이미지 제거
+    cleaned = cleaned.replace(/<[^>]*>?/gm, '');             // HTML 제거
+    cleaned = cleaned.replace(/\s+/g, ' ').trim();           // 연속 공백 제거
+    return cleaned;
+  };
 
   return (
     <Card onClick={handleClick}>
@@ -108,7 +128,8 @@ export default function DiaryCard({
       </Header>
 
       <Title>{title}</Title>
-      <Preview>{preview}</Preview>
+      <Preview>{stripHtmlTagsAndImages(preview)}</Preview>
+      {/* <Content>{diary?.content}</Content> */}
 
       <Footer>
         <EmotionWrap>
