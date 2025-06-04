@@ -19,7 +19,7 @@ npm i redux react-redux npm i react-icons
 | 구다경 | 웹 프론트엔드 / 웹 백엔드 | 리스트 페이지, 내 정보 수정 페이지, 통계 페이지 |
 
 ---
-![설명](https://user-images.githubusercontent.com/사용자아이디/파일이름.gif)![설명]
+https://github.com/sangam0919/moodCloud-frontend/issues/8#issue-3116347329 
 ### ✅ 팀 전체 회고
 
 #### 잘한 점
