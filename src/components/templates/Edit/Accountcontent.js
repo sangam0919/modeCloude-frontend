@@ -90,7 +90,7 @@ const Accountcontent = () => {
             </div>
             <div className='delete-popup-warp-btns'>
               <Button onClick={() => setActive(false)} background={"white"}>취소</Button>
-              <Link to={'/setting/delete'}>
+              <Link to={'/api/setting/delete'}>
                 <Button background={"#f44336"} color={""}>삭제</Button>
               </Link>
             </div>
